@@ -10,7 +10,7 @@
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Math">
-      <UniqueIdentifier>{d26fce34-bb53-4b72-bc4b-fa00e3c8a358}</UniqueIdentifier>
+      <UniqueIdentifier>{770b8e5e-70c8-46f2-b9de-e3115d19f74f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
