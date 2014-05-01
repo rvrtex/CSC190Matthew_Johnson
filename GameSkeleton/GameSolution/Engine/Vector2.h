@@ -96,6 +96,7 @@ std::ostream& operator<<(std::ostream stream, const Vector2& right)
 	std::cout << "{" << right.x << ", " << right.y << "}";
 	return stream;
 }
+float zeroCatch = .000000001;
 
 Vector2 cwPerpVector;
 Vector2 cwNewData;
@@ -103,7 +104,7 @@ Vector2 PerpCW(const Vector2& data)
 {
 	if (data.x == 0 && data.y == 0)
 	{
-		cwNewData = Vector2(.0000001, .0000001);
+		cwNewData = Vector2(zeroCatch, zeroCatch);
 		cwPerpVector = Vector2(-(cwNewData.y), cwNewData.x);
 	}
 	else{
@@ -114,12 +115,11 @@ Vector2 PerpCW(const Vector2& data)
 
 Vector2 ccwPerpVector;
 Vector2 ccwNewData;
-
 Vector2 PerpCCW(const Vector2& data)
 {
 	if (data.x == 0 && data.y == 0)
 	{
-		ccwNewData = Vector2(.0000001, .0000001);
+		ccwNewData = Vector2(zeroCatch, zeroCatch);
 		ccwPerpVector = Vector2(ccwNewData.x, -(ccwNewData.y));
 
 	}
