@@ -13,7 +13,7 @@ struct Vector2
 
 	operator float*(){ return &x; }
 
-	float dotReturn;
+	
 	float Dot(const Vector2& a, const Vector2& b)
 	{
 		return ((a.x)*(b.x)) + ((a.y)*(b.y));
@@ -98,33 +98,35 @@ std::ostream& operator<<(std::ostream stream, const Vector2& right)
 }
 float zeroCatch = .000000001;
 
-Vector2 cwPerpVector;
-Vector2 cwNewData;
+
 Vector2 PerpCW(const Vector2& data)
 {
+Vector2 cwPerpVector;
+Vector2 cwNewData;
 	if (data.x == 0 && data.y == 0)
 	{
-		cwNewData = Vector2(zeroCatch, zeroCatch);
-		cwPerpVector = Vector2(-(cwNewData.y), cwNewData.x);
+		cwNewData = Vector2(.0000001, .0000001);
+		cwPerpVector = Vector2((cwNewData.y), -cwNewData.x);
 	}
 	else{
-		cwPerpVector = Vector2(-(data.y), data.x);
+		cwPerpVector = Vector2((data.y), -data.x);
 	}
 	return cwPerpVector;
 }
 
-Vector2 ccwPerpVector;
-Vector2 ccwNewData;
+
 Vector2 PerpCCW(const Vector2& data)
 {
+Vector2 ccwPerpVector;
+Vector2 ccwNewData;
 	if (data.x == 0 && data.y == 0)
 	{
-		ccwNewData = Vector2(zeroCatch, zeroCatch);
-		ccwPerpVector = Vector2(ccwNewData.x, -(ccwNewData.y));
+		ccwNewData = Vector2(.0000001, .0000001);
+		ccwPerpVector = Vector2(-ccwNewData.y, (ccwNewData.x));
 
 	}
 	else{
-		ccwPerpVector = Vector2(data.x, -(data.y));
+		ccwPerpVector = Vector2(-data.y, (data.x));
 	}
 	return ccwPerpVector;
 
