@@ -1,8 +1,8 @@
-#include<iostream>
-#include<cmath>
+
 #ifndef VECTOR_2
 #define VECTOR_2
-
+#include<iostream>
+#include<cmath>
 
 struct Vector2
 {
@@ -24,7 +24,7 @@ struct Vector2
 
 
 
-Vector2 operator+(const Vector2& left, const Vector2& right)
+inline Vector2 operator+(const Vector2& left, const Vector2& right)
 {
 	Vector2 returnVector;
 	returnVector.x = left.x + right.x;
@@ -35,7 +35,7 @@ Vector2 operator+(const Vector2& left, const Vector2& right)
 }
 
 
-Vector2 operator-(const Vector2& left, const Vector2& right)
+inline Vector2 operator-(const Vector2& left, const Vector2& right)
 {
 	Vector2 returnVector;
 	returnVector.x = left.x - right.x;
@@ -44,7 +44,7 @@ Vector2 operator-(const Vector2& left, const Vector2& right)
 	return returnVector;
 }
 
-Vector2 operator*(const float& left, const Vector2& right)
+inline Vector2 operator*(const float& left, const Vector2& right)
 {
 	Vector2 returnVector;
 	returnVector.x = left * right.x;
@@ -53,7 +53,7 @@ Vector2 operator*(const float& left, const Vector2& right)
 	return returnVector;
 }
 
-Vector2 operator*(const Vector2& left, const float& right)
+inline Vector2 operator*(const Vector2& left, const float& right)
 {
 	Vector2 returnVector;
 	returnVector.x = left.x * right;
@@ -62,7 +62,7 @@ Vector2 operator*(const Vector2& left, const float& right)
 	return returnVector;
 }
 
-Vector2 operator/(const Vector2& left, const float& right)
+inline Vector2 operator/(const Vector2& left, const float& right)
 {
 	Vector2 returnVector;
 	returnVector.x = left.x / right;
@@ -71,18 +71,27 @@ Vector2 operator/(const Vector2& left, const float& right)
 	return returnVector;
 }
 
-float Length(const Vector2& data)
+inline float Length(const Vector2& data)
 {
 	return sqrt(pow(data.x, 2) + pow(data.y, 2));
 }
 
-float LengthSquared(const Vector2& data)
+inline float Length2Vectors(const Vector2 dataOne, const Vector2 dataTwo)
+{
+	float xTimesx= dataOne.x * dataTwo.x;
+	float yTimesy = dataOne.y * dataTwo.y;
+	float rad = xTimesx*yTimesy;
+	return sqrt(rad);
+	
+}
+
+inline float LengthSquared(const Vector2& data)
 {
 	return pow(Length(data),2);
 }
 
 
-Vector2 normalized(const Vector2& preNormalizedVector)
+inline Vector2 normalized(const Vector2& preNormalizedVector)
 {
 	float length = Length(preNormalizedVector);
 
@@ -91,21 +100,22 @@ Vector2 normalized(const Vector2& preNormalizedVector)
 	return normVector;
 }
 
-std::ostream& operator<<(std::ostream stream, const Vector2& right)
+inline std::ostream& operator<<(std::ostream stream, const Vector2& right)
 {
-	std::cout << "{" << right.x << ", " << right.y << "}";
-	return stream;
+	return std::cout << "{" << right.x << ", " << right.y << "}";
+	
+	//return stream;
 }
-float zeroCatch = .000000001;
 
 
-Vector2 PerpCW(const Vector2& data)
+
+inline Vector2 PerpCW(const Vector2& data)
 {
 Vector2 cwPerpVector;
 Vector2 cwNewData;
 	if (data.x == 0 && data.y == 0)
 	{
-		cwNewData = Vector2(.0000001, .0000001);
+		cwNewData = Vector2(.0000001f, .0000001f);
 		cwPerpVector = Vector2((cwNewData.y), -cwNewData.x);
 	}
 	else{
@@ -115,13 +125,13 @@ Vector2 cwNewData;
 }
 
 
-Vector2 PerpCCW(const Vector2& data)
+inline Vector2 PerpCCW(const Vector2& data)
 {
 Vector2 ccwPerpVector;
 Vector2 ccwNewData;
 	if (data.x == 0 && data.y == 0)
 	{
-		ccwNewData = Vector2(.0000001, .0000001);
+		ccwNewData = Vector2(.0000001f, .0000001f);
 		ccwPerpVector = Vector2(-ccwNewData.y, (ccwNewData.x));
 
 	}
@@ -132,8 +142,18 @@ Vector2 ccwNewData;
 
 }
 
-float dotReturn;
-float Dot(const Vector2& a, const Vector2& b)
+
+inline Vector2 LERP(Vector2 data, Vector2 data2, float beta){
+float lerpAVector;
+float lerpBVector;
+	lerpAVector = ((1-beta)* data.x) + (beta*data2.x);
+	lerpBVector = ((1-beta)* data.y) + (beta*data2.y);
+	Vector2 myLerpVector(lerpAVector, lerpBVector);
+	
+	return myLerpVector;
+}
+
+inline float Dot(const Vector2& a, const Vector2& b)
 {
 	return ((a.x)*(b.x)) + ((a.y)*(b.y));
 	

@@ -20,7 +20,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -86,7 +86,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Boundary.cpp" />
+    <ClCompile Include="DrawValues.cpp" />
+    <ClCompile Include="LerpingRoid.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SpaceShip.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Boundary.h" />
+    <ClInclude Include="DrawValues.h" />
+    <ClInclude Include="LerpingRoid.h" />
+    <ClInclude Include="SpaceShip.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
