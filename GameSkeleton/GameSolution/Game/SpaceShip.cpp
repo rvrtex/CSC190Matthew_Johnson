@@ -1,4 +1,5 @@
 #include "SpaceShip.h"
+#include "DrawValues.h"
 
 
 const float SCREEN_WIDTH = 1024;
@@ -11,10 +12,10 @@ Vector2 wallPieceFour(0.0f,SCREEN_HEIGHT/2);
 
 Vector2 spaceShipPoints[] = 
 {
-	Vector2(+0.0f,8.0f),
-	Vector2(-12.0f,0.0f),
-	Vector2(+0.0f,-20.0f),
-	Vector2(+12.0f,0.0f)
+	Vector2(+0.0f,14.0f),
+	Vector2(-18.0f,0.0f),
+	Vector2(+0.0f,-28.0f),
+	Vector2(+18.0f,0.0f)
 };
 
 Vector2 wallPoints[] =
@@ -43,100 +44,102 @@ void SpaceShip::draw(Core::Graphics& g)
 		{
 			const Vector2& first = wallPoints[i];
 			const Vector2& second = wallPoints[(i+1)% NUM_LINES];
-			g.DrawLine(first.x,first.y,second.x,second.y);
-			;}
+			g.DrawLine(first.x,first.y,second.x,second.y);			
+		}
 	}
-
-
 }
 
+Vector2 quadOneShipResultVector; 
+Vector2 quadOneWallTwoVector; 
+Vector2 quadOneWallNorm; 		
+Vector2 quadOneNormalized; 		
 
+Vector2 quadTwoShipResultVector; 
+Vector2 quadTwoWallTwoVector; 
+Vector2 quadTwoWallNorm; 		
+Vector2 quadTwoNormalized;		
+
+Vector2 quadThreeShipResultVector;
+Vector2 quadThreeWallTwoVector;
+Vector2 quadThreeWallNorm;
+Vector2 quadThreeNormalized;
+
+Vector2 quadFourShipResultVector;
+Vector2 quadFourWallTwoVector;	
+Vector2 quadFourWallNorm;		
+Vector2 quadFourNormalized;	
+
+float quadOneDotProd = 0;
+float quadTwoDotProd = 0;
+float quadThreeDotProd = 0;
+float quadFourDotProd = 0;
+
+void initializeVectors()
+{
+	quadOneWallTwoVector = wallPieceTwo - wallPieceOne;
+	quadOneWallNorm = PerpCCW(quadOneWallTwoVector);
+	quadOneNormalized =	normalized(quadOneWallNorm);
+
+	quadTwoWallTwoVector = wallPieceThree - wallPieceTwo;
+	quadTwoWallNorm = PerpCCW(quadTwoWallTwoVector);
+	quadTwoNormalized =	normalized(quadTwoWallNorm);
+
+	quadThreeWallTwoVector = wallPieceFour - wallPieceThree;
+	quadThreeWallNorm = PerpCCW(quadThreeWallTwoVector);
+	quadThreeNormalized = normalized(quadThreeWallNorm);
+
+	quadFourWallTwoVector =	 wallPieceOne - wallPieceFour;
+	quadFourWallNorm = PerpCCW(quadFourWallTwoVector);	
+	quadFourNormalized = normalized(quadFourWallNorm);
+}
+Vector2 initialPosition;
+Vector2 bounceSooner;
+int ousideLineNum = 8000;
 void SpaceShip::update(float dt)
 {
+	initialPosition = position;	
 	bool outSideLine = false;
 
-	float quadOneDotProd = 0;
-	float quadTwoDotProd = 0;
-	float quadThreeDotProd = 0;
-	float quadFourDotProd = 0;
-
-	Vector2 quadOneShipResultVector; 
-	Vector2 quadOneWallTwoVector; 
-	Vector2 quadOneWallNorm; 		
-	Vector2 quadOneNormalized; 		
-
-	Vector2 quadTwoShipResultVector; 
-	Vector2 quadTwoWallTwoVector; 
-	Vector2 quadTwoWallNorm; 		
-	Vector2 quadTwoNormalized;		
-
-	Vector2 quadThreeShipResultVector;
-	Vector2 quadThreeWallTwoVector;
-	Vector2 quadThreeWallNorm;
-	Vector2 quadThreeNormalized;
-
-	Vector2 quadFourShipResultVector;
-	Vector2 quadFourWallTwoVector;	
-	Vector2 quadFourWallNorm;		
-	Vector2 quadFourNormalized;	
 	//set initial position
 	if(wallMode)
 	{
-		quadOneShipResultVector = position - wallPieceOne;
-		quadOneWallTwoVector = wallPieceTwo - wallPieceOne;
-		quadOneWallNorm = PerpCCW(quadOneWallTwoVector);
-		quadOneNormalized =	normalized(quadOneWallNorm);
+		bounceSooner = Vector2(30.0f,0.0f);
+		quadOneShipResultVector = (position+bounceSooner) - wallPieceOne;
+		quadOneDotProd = Dot(quadOneWallNorm,quadOneShipResultVector);		
 
-		quadOneDotProd = Dot(quadOneWallNorm,quadOneShipResultVector);
-		if(quadOneDotProd < -8000 ) 
-		{
-			if(!outSideLine)
-			outSideLine = true;			
-		}		
-
-		quadTwoShipResultVector = position - wallPieceTwo;
-		quadTwoWallTwoVector = wallPieceThree - wallPieceTwo;
-		quadTwoWallNorm = PerpCCW(quadTwoWallTwoVector);
-		quadTwoNormalized =	normalized(quadTwoWallNorm);
-
+		bounceSooner = Vector2(0.0f,18.0f);
+		quadTwoShipResultVector = (position+bounceSooner) - wallPieceTwo;
 		quadTwoDotProd = Dot(quadTwoWallNorm,quadTwoShipResultVector);
 
-		if(quadTwoDotProd < -8000 ) 
-		{
-			if(!outSideLine)
-			outSideLine = true;
-		}	
-
-		quadThreeShipResultVector = position - wallPieceThree;
-		quadThreeWallTwoVector = wallPieceFour - wallPieceThree;
-		quadThreeWallNorm = PerpCCW(quadThreeWallTwoVector);
-		quadThreeNormalized = normalized(quadThreeWallNorm);
-
+		bounceSooner = Vector2(-24.0f,0.0f);
+		quadThreeShipResultVector = (position+bounceSooner) - wallPieceThree;
 		quadThreeDotProd = Dot(quadThreeWallNorm,quadThreeShipResultVector);
 
-		if(quadThreeDotProd < -8000 ) 
+		bounceSooner = Vector2(0.0f,-30.0f);
+		quadFourShipResultVector = (position+bounceSooner) - wallPieceFour;
+		quadFourDotProd = Dot(quadFourWallNorm,quadFourShipResultVector);
+
+		if(quadOneDotProd < -ousideLineNum ) 
+		{			
+			outSideLine = true;								
+		}	
+		else if(quadTwoDotProd < -ousideLineNum ) 
 		{
-			if(!outSideLine)
 			outSideLine = true;
 		}	
-
-		quadFourShipResultVector = position - wallPieceFour;
-		quadFourWallTwoVector =	 wallPieceOne - wallPieceFour;
-		quadFourWallNorm = PerpCCW(quadFourWallTwoVector);	
-		quadFourNormalized = normalized(quadFourWallNorm);
-
-		quadFourDotProd = Dot(quadFourWallNorm,quadFourShipResultVector);
-		
-		if(quadFourDotProd < -8000 ) 
+		else if(quadThreeDotProd < -ousideLineNum ) 
 		{
-			if(!outSideLine)
+
+			outSideLine = true;
+		}			
+		else if(quadFourDotProd < -ousideLineNum) 
+		{
 			outSideLine = true;
 		}
 	}
-	dt = dt*4;
+	dt = dt*7;
 
 	//Pick mode
-
 	if(Core::Input::IsPressed('1'))
 	{
 		currentMode = 1;
@@ -149,43 +152,50 @@ void SpaceShip::update(float dt)
 	}
 	if(Core::Input::IsPressed('3'))
 	{
+		initializeVectors();
 		wallMode = true;
+	}
+	if(Core::Input::IsPressed('H'))
+	{
+		velocity.x = velocity.y = 0;
+
 	}
 
 	//stear ship
-	int timeDT =100;
+	unsigned int quickTurnAround = 25;
+	int maxSpeed = 100;
 	if(Core::Input::IsPressed(Core::Input::KEY_RIGHT))
 	{
 
-		if(velocity.x < 20)
+		if(velocity.x < maxSpeed)
 		{
-			velocity.x += dt*timeDT;
+			velocity.x += dt*quickTurnAround;
 		}
 	}
 	if(Core::Input::IsPressed(Core::Input::KEY_LEFT))
 	{
-		if(velocity.x > -20)
+		if(velocity.x > -maxSpeed)
 		{
-			velocity.x -= dt*timeDT;
+			velocity.x -= dt*quickTurnAround;
 		}
 	}
 	if(Core::Input::IsPressed(Core::Input::KEY_UP))
 	{
-		if(velocity.y > -20)
+		if(velocity.y > -maxSpeed)
 		{
-			velocity.y -= dt*timeDT;
+			velocity.y -= dt*quickTurnAround;
 		}
 	}
 	if(Core::Input::IsPressed(Core::Input::KEY_DOWN))
 	{
 
-		if(velocity.y < 20)
+		if(velocity.y < maxSpeed)
 		{
-			velocity.y += dt*timeDT;
+			velocity.y += dt*quickTurnAround;
 		}
 	}
 
-	//do the bounce
+	//do the bounce of outside walls
 	if(currentMode == 1)
 	{
 
@@ -233,6 +243,8 @@ void SpaceShip::update(float dt)
 
 	if(wallMode && !outSideLine)
 	{
+		position = initialPosition;
+
 		if(quadOneDotProd < 0 )
 		{
 			velocity = velocity - (2*(Dot(velocity,quadOneNormalized)*quadOneNormalized));

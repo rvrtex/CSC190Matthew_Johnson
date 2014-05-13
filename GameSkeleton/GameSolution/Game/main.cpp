@@ -26,20 +26,20 @@ bool Update(float dt)
 
 void Draw(Core::Graphics& graphics)
 {
-	/*graphics.SetColor(RGB(255, 255, 255));*/
-	/*meShip.position = Vector2(75,75);*/
+	
 	meShip.draw(graphics);
 	meLerp.draw(graphics);
-	drawValues.DrawValue(graphics, 300, 50, meShip.position);
 	
-	//graphics.DrawString(SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2 - 20, "Hello World");
-	//graphics.DrawLine(400, 300, 10, 10);
+	//DrawValues::DrawValue(graphics,100,100,
+	
+	graphics.DrawString(50, 20, "1: Bounce, 2: Wrap, 3: Arbitray Walls, 4: Hammer Time");
+	
 }
 
 
 void main()
 {
-	meShip.position = Vector2(70,70);
+	meShip.position = Vector2(500,300);
 	meLerp.position = Vector2(+50.0f,50.0f);
 
 	Core::Init("Matt's AWESOME Game Demo", SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -47,6 +47,6 @@ void main()
 	Core::RegisterDrawFn(Draw);
 	Core::GameLoop();
 
-	//Engine::sampleFunctionThatReturnsTrue();
+	
 }
 
