@@ -159,4 +159,6 @@ inline float Dot(const Vector2& a, const Vector2& b)
 	
 };
 
+
+
 #endif // !VECTOR2
