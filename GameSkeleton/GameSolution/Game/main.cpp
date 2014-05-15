@@ -29,7 +29,8 @@ void Draw(Core::Graphics& graphics)
 	
 	meShip.draw(graphics);
 	meLerp.draw(graphics);
-	
+
+	graphics.DrawString(50, 30, "DrawShip: "+meShip.outSideLine);
 	//DrawValues::DrawValue(graphics,100,100,
 	
 	graphics.DrawString(50, 20, "1: Bounce, 2: Wrap, 3: Arbitray Walls, 4: Hammer Time");

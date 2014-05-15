@@ -19,26 +19,26 @@ float matrix[4];
 	matrix[3] = 1.0f;
 	
 };
-	Matrix2(Vector2 firstVector, Vector2 secondVector){
+	Matrix2(const Vector2 firstVector, const Vector2 secondVector){
 		matrix[0] = firstVector.x;
 		matrix[1] = secondVector.x;
 		matrix[2] = firstVector.y;
 		matrix[3] = secondVector.y;
 	};
 
-inline Matrix2 Scale(float scaler)
+inline Matrix2 Scale(const float scaler)
 {
 	matrix[0] = matrix[0]*scaler;
 	matrix[3] = matrix[3]*scaler;
 };
 
-inline Matrix2 ScaleX(float scaler)
+inline Matrix2 ScaleX(const float scaler)
 {
 	matrix[0] = matrix[0]*scaler;
 
 };
 
-inline Matrix2 ScaleY(float scaler)
+inline Matrix2 ScaleY(const float scaler)
 {
 	matrix[3] = matrix[3]*scaler;
 };

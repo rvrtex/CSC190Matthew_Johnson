@@ -11,7 +11,7 @@ public:
 	Vector2 velocity;
 	void draw(Core::Graphics&);
 	void update(float dt);
-	
+	bool outSideLine;
 
 };
 

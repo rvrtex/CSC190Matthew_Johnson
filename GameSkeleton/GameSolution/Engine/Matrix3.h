@@ -25,7 +25,7 @@ public:
 		matrix[8] = 1.0f;
 	};
 
-	Matrix3(Vector2 firstVector, Vector2 secondVector){
+	Matrix3(const Vector2 firstVector, const Vector2 secondVector){
 		matrix[0] = firstVector.x;
 		matrix[1] = secondVector.x;
 		matrix[2] = 0;

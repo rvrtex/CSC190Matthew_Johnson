@@ -69,10 +69,7 @@ Vector2 quadFourWallTwoVector;
 Vector2 quadFourWallNorm;		
 Vector2 quadFourNormalized;	
 
-float quadOneDotProd = 0;
-float quadTwoDotProd = 0;
-float quadThreeDotProd = 0;
-float quadFourDotProd = 0;
+
 
 void initializeVectors()
 {
@@ -92,52 +89,55 @@ void initializeVectors()
 	quadFourWallNorm = PerpCCW(quadFourWallTwoVector);	
 	quadFourNormalized = normalized(quadFourWallNorm);
 }
+
+
 Vector2 initialPosition;
 Vector2 bounceSooner;
-int ousideLineNum = 8000;
+int ousideLineNum = 0;
 void SpaceShip::update(float dt)
 {
-	initialPosition = position;	
-	bool outSideLine = false;
 
-	//set initial position
+float quadOneDotProd = 0;
+float quadTwoDotProd = 0;
+float quadThreeDotProd = 0;
+float quadFourDotProd = 0;
+
+float quadLastOneDotProd = 0;
+float quadLastTwoDotProd = 0;
+float quadLastThreeDotProd = 0;
+float quadLastFourDotProd = 0;
+//set initial position
+
+	outSideLine = false;
+
 	if(wallMode)
 	{
-		bounceSooner = Vector2(30.0f,0.0f);
+		bounceSooner = Vector2(18.0f,-28.0f);
 		quadOneShipResultVector = (position+bounceSooner) - wallPieceOne;
-		quadOneDotProd = Dot(quadOneWallNorm,quadOneShipResultVector);		
+		quadOneDotProd = Dot(quadOneWallNorm,quadOneShipResultVector);	
+		quadOneShipResultVector = (initialPosition+bounceSooner) - wallPieceOne;
+		quadLastOneDotProd = Dot(quadOneWallNorm,quadOneShipResultVector);	
 
-		bounceSooner = Vector2(0.0f,18.0f);
+		bounceSooner = Vector2(18.0f,14.0f);		
 		quadTwoShipResultVector = (position+bounceSooner) - wallPieceTwo;
 		quadTwoDotProd = Dot(quadTwoWallNorm,quadTwoShipResultVector);
+		quadTwoShipResultVector = (initialPosition+bounceSooner) - wallPieceTwo;
+		quadLastTwoDotProd = Dot(quadTwoWallNorm,quadTwoShipResultVector);	
 
-		bounceSooner = Vector2(-24.0f,0.0f);
+		bounceSooner = Vector2(-18.0f,14.0f);		
 		quadThreeShipResultVector = (position+bounceSooner) - wallPieceThree;
 		quadThreeDotProd = Dot(quadThreeWallNorm,quadThreeShipResultVector);
+		quadThreeShipResultVector = (initialPosition+bounceSooner) - wallPieceThree;
+		quadLastThreeDotProd = Dot(quadThreeWallNorm,quadThreeShipResultVector);	
 
-		bounceSooner = Vector2(0.0f,-30.0f);
+		bounceSooner = Vector2(-18.0f,-28.0f);		
 		quadFourShipResultVector = (position+bounceSooner) - wallPieceFour;
 		quadFourDotProd = Dot(quadFourWallNorm,quadFourShipResultVector);
+		quadFourShipResultVector = (initialPosition+bounceSooner) - wallPieceFour;
+		quadLastFourDotProd = Dot(quadFourWallNorm,quadFourShipResultVector);	
 
-		if(quadOneDotProd < -ousideLineNum ) 
-		{			
-			outSideLine = true;								
-		}	
-		else if(quadTwoDotProd < -ousideLineNum ) 
-		{
-			outSideLine = true;
-		}	
-		else if(quadThreeDotProd < -ousideLineNum ) 
-		{
-
-			outSideLine = true;
-		}			
-		else if(quadFourDotProd < -ousideLineNum) 
-		{
-			outSideLine = true;
-		}
 	}
-	dt = dt*7;
+	dt = dt*2;
 
 	//Pick mode
 	if(Core::Input::IsPressed('1'))
@@ -162,7 +162,7 @@ void SpaceShip::update(float dt)
 	}
 
 	//stear ship
-	unsigned int quickTurnAround = 25;
+	unsigned int quickTurnAround = 10;
 	int maxSpeed = 100;
 	if(Core::Input::IsPressed(Core::Input::KEY_RIGHT))
 	{
@@ -198,7 +198,6 @@ void SpaceShip::update(float dt)
 	//do the bounce of outside walls
 	if(currentMode == 1)
 	{
-
 		if(position.x < 0)
 		{
 			velocity.x *= -1;
@@ -214,7 +213,6 @@ void SpaceShip::update(float dt)
 		if(position.y > 720)
 		{
 			velocity.y *= -1;
-
 		}
 	}
 	//wrap the ship
@@ -235,40 +233,45 @@ void SpaceShip::update(float dt)
 		if(position.y > 728)
 		{
 			position.y = 0;
-
 		}
 	}
 
 	//wall are on
-
-	if(wallMode && !outSideLine)
+	if(wallMode)
 	{
-		position = initialPosition;
+		
 
-		if(quadOneDotProd < 0 )
+		if(quadOneDotProd < 0 && quadLastOneDotProd > 0 )
 		{
+			position = initialPosition;
 			velocity = velocity - (2*(Dot(velocity,quadOneNormalized)*quadOneNormalized));
 
 		}
-		else if(quadTwoDotProd < 0)
+		else if(quadTwoDotProd < 0 && quadLastTwoDotProd > 0)
 		{
+			position = initialPosition;
 			velocity = velocity - (2*(Dot(velocity,quadTwoNormalized)*quadTwoNormalized));
 
 		}
-		else if( quadThreeDotProd < 0)
+		else if( quadThreeDotProd < 0 && quadLastThreeDotProd > 0)
 		{
+			position = initialPosition;
 			velocity = velocity - (2*(Dot(velocity,quadThreeNormalized)*quadThreeNormalized));
 
 		}
-		else if(quadFourDotProd < 0)
+		else if(quadFourDotProd < 0 && quadLastFourDotProd > 0)
 		{
+			position = initialPosition;
 			velocity = velocity - (2*(Dot(velocity,quadFourNormalized)*quadFourNormalized));
 
 		}
+
 	}
 
-	position.x = position.x + velocity.x * dt;
-	position.y = position.y + velocity.y * dt;
+	initialPosition = position;	
+
+	position.x = position.x + velocity.x * dt*quickTurnAround;
+	position.y = position.y + velocity.y * dt*quickTurnAround;
 
 }
 
