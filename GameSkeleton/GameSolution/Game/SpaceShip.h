@@ -9,9 +9,11 @@ class SpaceShip
 public:
 	Vector2 position;
 	Vector2 velocity;
+	bool outSideLine;
+	
 	void draw(Core::Graphics&);
 	void update(float dt);
-	bool outSideLine;
+	void ModeKeyPressed(Vector2&);
 
 };
 
