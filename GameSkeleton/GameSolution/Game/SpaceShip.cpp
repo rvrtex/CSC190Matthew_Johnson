@@ -10,12 +10,22 @@ Vector2 wallPieceTwo(SCREEN_WIDTH,SCREEN_HEIGHT/2);
 Vector2 wallPieceThree(SCREEN_WIDTH/2,SCREEN_HEIGHT);
 Vector2 wallPieceFour(0.0f,SCREEN_HEIGHT/2);
 
+
 Vector2 spaceShipPoints[] = 
 {
 	Vector2(+0.0f,14.0f),
 	Vector2(-18.0f,0.0f),
 	Vector2(+0.0f,-28.0f),
 	Vector2(+18.0f,0.0f)
+};
+
+Vector2 rotatedSpaceShipPoint[] =
+{
+	Vector2(+0.0f,14.0f),
+	Vector2(-18.0f,0.0f),
+	Vector2(+0.0f,-28.0f),
+	Vector2(+18.0f,0.0f)
+
 };
 
 Vector2 wallPoints[] =
@@ -28,6 +38,9 @@ Vector2 wallPoints[] =
 
 unsigned int currentMode;
 bool wallMode;
+float angle = 0;
+
+
 
 void SpaceShip::ModeKeyPressed(Vector2& velocity)
 {
@@ -60,8 +73,8 @@ void SpaceShip::draw(Core::Graphics& g)
 	const unsigned int NUM_LINES = sizeof(spaceShipPoints)/sizeof(*spaceShipPoints);
 	for(unsigned int i = 0; i < NUM_LINES; i++)
 	{
-		const Vector2& first = position+spaceShipPoints[i];
-		const Vector2& second = position+spaceShipPoints[(i+1)% NUM_LINES];
+		const Vector2& first = position+rotatedSpaceShipPoint[i];
+		const Vector2& second = position+rotatedSpaceShipPoint[(i+1)% NUM_LINES];
 		g.DrawLine(first.x,first.y,second.x,second.y);
 		;}
 	if(wallMode)
@@ -128,36 +141,56 @@ float quadLastDotProd = 0;
 
 	//stear ship
 	unsigned int quickTurnAround = 10;
-	int maxSpeed = 100;
-	if(Core::Input::IsPressed(Core::Input::KEY_RIGHT))
-	{
-
-		if(velocity.x < maxSpeed)
-		{
-			velocity.x += dt*quickTurnAround;
-		}
-	}
+//	int maxSpeed = 100;
+	Matrix3 tempMatrix;
+	Vector2 tempVector;
 	if(Core::Input::IsPressed(Core::Input::KEY_LEFT))
 	{
-		if(velocity.x > -maxSpeed)
+		angle = angle + ((-1 * (2.0f*3.14f)) /100.0f);
+
+
+		tempMatrix.Rotation(angle);
+		for(int i = 0; i < 4; i++)
 		{
-			velocity.x -= dt*quickTurnAround;
+			rotatedSpaceShipPoint[i] = tempMatrix*spaceShipPoints[i];
 		}
+		
+		
 	}
+	if(Core::Input::IsPressed(Core::Input::KEY_RIGHT))
+	{
+		angle = angle + ((1 * (2.0f*3.14f)) /100.0f);
+
+
+		tempMatrix.Rotation(angle);
+		for(int i = 0; i < 4; i++)
+		{
+			rotatedSpaceShipPoint[i] = tempMatrix*spaceShipPoints[i];
+		}			
+		
+	}
+	
 	if(Core::Input::IsPressed(Core::Input::KEY_UP))
 	{
-		if(velocity.y > -maxSpeed)
-		{
-			velocity.y -= dt*quickTurnAround;
-		}
+		
+		Vector2 acceleration(0.f,-dt*quickTurnAround);
+		
+			
+			tempMatrix.Rotation(angle);
+			acceleration = tempMatrix*acceleration;
+			velocity = velocity+acceleration;
+		
 	}
 	if(Core::Input::IsPressed(Core::Input::KEY_DOWN))
 	{
 
-		if(velocity.y < maxSpeed)
-		{
-			velocity.y += dt*quickTurnAround;
-		}
+		
+			Vector2 acceleration(0.f,dt*quickTurnAround);		
+			
+			tempMatrix.Rotation(angle);
+			acceleration = tempMatrix*acceleration;
+			velocity = velocity+acceleration;
+		
 	}
 
 	//do the bounce of outside walls

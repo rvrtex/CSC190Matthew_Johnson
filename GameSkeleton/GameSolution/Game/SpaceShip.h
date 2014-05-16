@@ -3,6 +3,7 @@
 
 #include "Core.h"
 #include "Vector2.h"
+#include "Matrix3.h"
 
 class SpaceShip
 {
