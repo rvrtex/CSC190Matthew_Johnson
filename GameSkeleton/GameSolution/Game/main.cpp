@@ -3,6 +3,9 @@
 #include "SpaceShip.h"
 #include "LerpingRoid.h"
 #include "DrawValues.h"
+#include "ProjectileManager.h"
+#include "GameSolution.h"
+
 
 using Core::Input;
 
@@ -10,9 +13,11 @@ const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 728;
 
 bool red = true;
-SpaceShip meShip;
+ProjectileManager pm;
+SpaceShip meShip(pm);
 LerpingRoid meLerp;
 DrawValues drawValues;
+GameSolution gs;
 
 bool Update(float dt)
 {	
@@ -29,8 +34,9 @@ void Draw(Core::Graphics& graphics)
 	
 	meShip.draw(graphics);
 	meLerp.draw(graphics);
+	pm.draw(graphics);
+	gs.draw(graphics);
 
-	graphics.DrawString(50, 30, "DrawShip: "+meShip.outSideLine);
 	//DrawValues::DrawValue(graphics,100,100,
 	
 	graphics.DrawString(50, 20, "1: Bounce, 2: Wrap, 3: Arbitray Walls, 4: Hammer Time");

@@ -6,11 +6,21 @@
     <ClCompile Include="LerpingRoid.cpp" />
     <ClCompile Include="Boundary.cpp" />
     <ClCompile Include="DrawValues.cpp" />
+    <ClCompile Include="Turret.cpp" />
+    <ClCompile Include="Missile.cpp" />
+    <ClCompile Include="GameSolution.cpp" />
+    <ClCompile Include="ProjectileManager.cpp" />
+    <ClCompile Include="squarePlanet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SpaceShip.h" />
     <ClInclude Include="LerpingRoid.h" />
     <ClInclude Include="Boundary.h" />
     <ClInclude Include="DrawValues.h" />
+    <ClInclude Include="Turret.h" />
+    <ClInclude Include="Missile.h" />
+    <ClInclude Include="GameSolution.h" />
+    <ClInclude Include="ProjectileManager.h" />
+    <ClInclude Include="squarePlanet.h" />
   </ItemGroup>
 </Project>

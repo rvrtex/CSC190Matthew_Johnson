@@ -10,7 +10,6 @@ Vector2 wallPieceTwo(SCREEN_WIDTH,SCREEN_HEIGHT/2);
 Vector2 wallPieceThree(SCREEN_WIDTH/2,SCREEN_HEIGHT);
 Vector2 wallPieceFour(0.0f,SCREEN_HEIGHT/2);
 
-
 Vector2 spaceShipPoints[] = 
 {
 	Vector2(+0.0f,14.0f),
@@ -19,14 +18,15 @@ Vector2 spaceShipPoints[] =
 	Vector2(+18.0f,0.0f)
 };
 
-Vector2 rotatedSpaceShipPoint[] =
+Vector2 rotatedSpaceShipPoint[] = 
 {
 	Vector2(+0.0f,14.0f),
 	Vector2(-18.0f,0.0f),
 	Vector2(+0.0f,-28.0f),
 	Vector2(+18.0f,0.0f)
-
 };
+
+
 
 Vector2 wallPoints[] =
 {
@@ -36,10 +36,19 @@ Vector2 wallPoints[] =
 	wallPieceFour
 };
 
+ProjectileManager myPm;
 unsigned int currentMode;
 bool wallMode;
 float angle = 0;
+float myDt;
+Turret myTurret;
+float reload;
 
+SpaceShip::SpaceShip(ProjectileManager& pm)
+{
+	myPm = pm;
+	myTurret = Turret(myPm);
+}
 
 
 void SpaceShip::ModeKeyPressed(Vector2& velocity)
@@ -64,17 +73,31 @@ void SpaceShip::ModeKeyPressed(Vector2& velocity)
 	if(Core::Input::IsPressed('H'))
 	{
 		velocity.x = velocity.y = 0;
-
 	}
+	if(Core::Input::IsPressed(Core::Input::BUTTON_LEFT))
+	{		
+		if(reload > 1)
+		{
+			myTurret.FireButtonPressed(myDt);
+			reload = 0.0f;
+		}
+		
+	}
+	reload += myDt*2;
 }
 
 void SpaceShip::draw(Core::Graphics& g)
 {
-	const unsigned int NUM_LINES = sizeof(spaceShipPoints)/sizeof(*spaceShipPoints);
+	const unsigned int NUM_LINES = sizeof(rotatedSpaceShipPoint)/sizeof(*rotatedSpaceShipPoint);
+	//matrix transform
+	Matrix3 transform;
+	myTurret.draw(g,position);
+
 	for(unsigned int i = 0; i < NUM_LINES; i++)
 	{
-		const Vector2& first = position+rotatedSpaceShipPoint[i];
-		const Vector2& second = position+rotatedSpaceShipPoint[(i+1)% NUM_LINES];
+		transform.Translation(position);
+		const Vector2 first = transform* rotatedSpaceShipPoint[i];
+		const Vector2 second = transform * rotatedSpaceShipPoint[(i+1)% NUM_LINES];
 		g.DrawLine(first.x,first.y,second.x,second.y);
 		;}
 	if(wallMode)
@@ -86,6 +109,8 @@ void SpaceShip::draw(Core::Graphics& g)
 			g.DrawLine(first.x,first.y,second.x,second.y);			
 		}
 	}
+
+
 }
 
 Vector2 quadShipResultVector; 
@@ -100,9 +125,9 @@ int ousideLineNum = 0;
 void SpaceShip::update(float dt)
 {
 
-float quadDotProd = 0;
-float quadLastDotProd = 0;
-
+	myDt = dt;
+	float quadDotProd = 0;
+	float quadLastDotProd = 0;
 	outSideLine = false;
 
 	if(wallMode)
@@ -120,7 +145,7 @@ float quadLastDotProd = 0;
 			}
 		
 			quadWallNorm = PerpCCW(quadWallTwoVector);
-			quadNormalized =	normalized(quadWallNorm);
+			quadNormalized = normalized(quadWallNorm);
 			quadShipResultVector = (position) - wallPoints[i];
 			quadDotProd = Dot(quadWallNorm,quadShipResultVector);	
 			quadShipResultVector = (initialPosition) - wallPoints[i];
@@ -148,7 +173,6 @@ float quadLastDotProd = 0;
 	{
 		angle = angle + ((-1 * (2.0f*3.14f)) /100.0f);
 
-
 		tempMatrix.Rotation(angle);
 		for(int i = 0; i < 4; i++)
 		{
@@ -161,7 +185,6 @@ float quadLastDotProd = 0;
 	{
 		angle = angle + ((1 * (2.0f*3.14f)) /100.0f);
 
-
 		tempMatrix.Rotation(angle);
 		for(int i = 0; i < 4; i++)
 		{
@@ -172,10 +195,7 @@ float quadLastDotProd = 0;
 	
 	if(Core::Input::IsPressed(Core::Input::KEY_UP))
 	{
-		
-		Vector2 acceleration(0.f,-dt*quickTurnAround);
-		
-			
+			Vector2 acceleration(0.f,-dt*quickTurnAround);			
 			tempMatrix.Rotation(angle);
 			acceleration = tempMatrix*acceleration;
 			velocity = velocity+acceleration;
@@ -183,14 +203,10 @@ float quadLastDotProd = 0;
 	}
 	if(Core::Input::IsPressed(Core::Input::KEY_DOWN))
 	{
-
-		
-			Vector2 acceleration(0.f,dt*quickTurnAround);		
-			
+			Vector2 acceleration(0.f,dt*quickTurnAround);				
 			tempMatrix.Rotation(angle);
 			acceleration = tempMatrix*acceleration;
-			velocity = velocity+acceleration;
-		
+			velocity = velocity+acceleration;	
 	}
 
 	//do the bounce of outside walls
@@ -234,110 +250,13 @@ float quadLastDotProd = 0;
 		}
 	}
 
-	//wall are on
 	
 
 	initialPosition = position;	
 
 	position.x = position.x + velocity.x * dt*quickTurnAround;
 	position.y = position.y + velocity.y * dt*quickTurnAround;
+	myTurret.update();
+
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/*		bounceSooner = Vector2(28.0f,-28.0f);
-		quadOneShipResultVector = (position+bounceSooner) - wallPieceOne;
-		quadOneDotProd = Dot(quadOneWallNorm,quadOneShipResultVector);	
-		quadOneShipResultVector = (initialPosition+bounceSooner) - wallPieceOne;
-		quadLastOneDotProd = Dot(quadOneWallNorm,quadOneShipResultVector);	
-		bounceSooner = Vector2(18.0f,14.0f);		
-		quadTwoShipResultVector = (position+bounceSooner) - wallPieceTwo;
-		quadTwoDotProd = Dot(quadTwoWallNorm,quadTwoShipResultVector);
-		quadTwoShipResultVector = (initialPosition+bounceSooner) - wallPieceTwo;
-		quadLastTwoDotProd = Dot(quadTwoWallNorm,quadTwoShipResultVector);	
-		bounceSooner = Vector2(-18.0f,14.0f);		
-		quadThreeShipResultVector = (position+bounceSooner) - wallPieceThree;
-		quadThreeDotProd = Dot(quadThreeWallNorm,quadThreeShipResultVector);
-		quadThreeShipResultVector = (initialPosition+bounceSooner) - wallPieceThree;
-		quadLastThreeDotProd = Dot(quadThreeWallNorm,quadThreeShipResultVector);
-		bounceSooner = Vector2(-18.0f,-28.0f);		
-		quadFourShipResultVector = (position+bounceSooner) - wallPieceFour;
-		quadFourDotProd = Dot(quadFourWallNorm,quadFourShipResultVector);
-		quadFourShipResultVector = (initialPosition+bounceSooner) - wallPieceFour;
-		quadLastFourDotProd = Dot(quadFourWallNorm,quadFourShipResultVector);	
-if(wallMode)
-	{
-		if(quadOneDotProd < 0 && quadLastOneDotProd > 0 )
-		{
-			position = initialPosition;
-			velocity = velocity - (2*(Dot(velocity,quadOneNormalized)*quadOneNormalized));
-
-		}
-		else if(quadTwoDotProd < 0 && quadLastTwoDotProd > 0)
-		{
-			position = initialPosition;
-			velocity = velocity - (2*(Dot(velocity,quadTwoNormalized)*quadTwoNormalized));
-
-		}
-		else if( quadThreeDotProd < 0 && quadLastThreeDotProd > 0)
-		{
-			position = initialPosition;
-			velocity = velocity - (2*(Dot(velocity,quadThreeNormalized)*quadThreeNormalized));
-		}
-		else if(quadFourDotProd < 0 && quadLastFourDotProd > 0)
-		{
-			position = initialPosition;
-			velocity = velocity - (2*(Dot(velocity,quadFourNormalized)*quadFourNormalized));
-		}
-	}
-//float quadTwoDotProd = 0;
-//float quadThreeDotProd = 0;
-//float quadFourDotProd = 0;
-//float quadLastTwoDotProd = 0;
-//float quadLastThreeDotProd = 0;
-//float quadLastFourDotProd = 0;
-//set initial position
-//void initializeVectors()
-//{
-//	quadOneWallTwoVector = wallPieceTwo - wallPieceOne;
-//	quadOneWallNorm = PerpCCW(quadOneWallTwoVector);
-//	quadOneNormalized =	normalized(quadOneWallNorm);
-//
-//	quadTwoWallTwoVector = wallPieceThree - wallPieceTwo;
-//	quadTwoWallNorm = PerpCCW(quadTwoWallTwoVector);
-//	quadTwoNormalized =	normalized(quadTwoWallNorm);
-//
-//	quadThreeWallTwoVector = wallPieceFour - wallPieceThree;
-//	quadThreeWallNorm = PerpCCW(quadThreeWallTwoVector);
-//	quadThreeNormalized = normalized(quadThreeWallNorm);
-//
-//	quadFourWallTwoVector =	 wallPieceOne - wallPieceFour;
-//	quadFourWallNorm = PerpCCW(quadFourWallTwoVector);	
-//	quadFourNormalized = normalized(quadFourWallNorm);
-//}
-//Vector2 quadTwoShipResultVector; 
-//Vector2 quadTwoWallTwoVector; 
-//Vector2 quadTwoWallNorm; 		
-//Vector2 quadTwoNormalized;		
-//
-//Vector2 quadThreeShipResultVector;
-//Vector2 quadThreeWallTwoVector;
-//Vector2 quadThreeWallNorm;
-//Vector2 quadThreeNormalized;
-//
-//Vector2 quadFourShipResultVector;
-//Vector2 quadFourWallTwoVector;	
-//Vector2 quadFourWallNorm;		
-//Vector2 quadFourNormalized;	
-*/
-
