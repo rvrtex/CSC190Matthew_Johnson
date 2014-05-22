@@ -37,7 +37,7 @@ Vector2 wallPoints[] =
 };
 
 ProjectileManager myPm;
-unsigned int currentMode;
+unsigned int currentMode = 1;
 bool wallMode;
 float angle = 0;
 float myDt;
