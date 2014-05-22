@@ -1,9 +1,21 @@
 #include "GameSolution.h"
+#include "Core.h"
+#include "SpaceShip.h"
+#include "LerpingRoid.h"
+#include "DrawValues.h"
+#include "ProjectileManager.h"
+#include "GameSolution.h"
 
+ProjectileManager pm;
+SpaceShip meShip(pm);
+LerpingRoid meLerp;
+DrawValues drawValues;
 
 GameSolution::GameSolution(void)
 {
 	ProjectileManager pm;
+	meShip.position = Vector2(500,300);
+	meLerp.position = Vector2(+50.0f,50.0f);
 }
 
 Vector2 Dimension[] = {
@@ -66,8 +78,21 @@ squarePlanet recusivePlanets(int n, int cn,float angle, Core::Graphics& g, Matri
 	}
 }
 
-void GameSolution::draw(Core::Graphics& g)
+void GameSolution::update(float dt)
+{	
+	meShip.update(dt);
+	meLerp.update(dt);
+		
+}
+
+
+void GameSolution::draw(Core::Graphics& graphics)
 {
+	
+	meShip.draw(graphics);
+	meLerp.draw(graphics);
+	pm.draw(graphics);
+	
 	Matrix3 initialMatrix;
-	squarePlanet sp = recusivePlanets(5,0,0,g,initialMatrix);
+	squarePlanet sp = recusivePlanets(5,0,0,graphics,initialMatrix);
 }

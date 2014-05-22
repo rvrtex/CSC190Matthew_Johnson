@@ -14,7 +14,7 @@ public:
 	Vector2 position;
 	Vector2 velocity;
 	bool outSideLine;
-	
+	Matrix3 rotatedMatirx;
 	void draw(Core::Graphics&);
 	void update(float dt);
 	void ModeKeyPressed(Vector2&);

@@ -43,7 +43,7 @@ float angle = 0;
 float myDt;
 Turret myTurret;
 float reload;
-
+DrawValues dv;
 SpaceShip::SpaceShip(ProjectileManager& pm)
 {
 	myPm = pm;
@@ -91,6 +91,8 @@ void SpaceShip::draw(Core::Graphics& g)
 	const unsigned int NUM_LINES = sizeof(rotatedSpaceShipPoint)/sizeof(*rotatedSpaceShipPoint);
 	//matrix transform
 	Matrix3 transform;
+	Matrix3 finalMatrix;
+	
 	myTurret.draw(g,position);
 
 	for(unsigned int i = 0; i < NUM_LINES; i++)
@@ -109,7 +111,8 @@ void SpaceShip::draw(Core::Graphics& g)
 			g.DrawLine(first.x,first.y,second.x,second.y);			
 		}
 	}
-
+	finalMatrix =transform*rotatedMatirx;
+	dv.DrawValue(g,200,200,finalMatrix);
 
 }
 
@@ -169,10 +172,10 @@ void SpaceShip::update(float dt)
 //	int maxSpeed = 100;
 	Matrix3 tempMatrix;
 	Vector2 tempVector;
+	rotatedMatirx = tempMatrix;
 	if(Core::Input::IsPressed(Core::Input::KEY_LEFT))
 	{
 		angle = angle + ((-1 * (2.0f*3.14f)) /100.0f);
-
 		tempMatrix.Rotation(angle);
 		for(int i = 0; i < 4; i++)
 		{
@@ -186,6 +189,7 @@ void SpaceShip::update(float dt)
 		angle = angle + ((1 * (2.0f*3.14f)) /100.0f);
 
 		tempMatrix.Rotation(angle);
+		
 		for(int i = 0; i < 4; i++)
 		{
 			rotatedSpaceShipPoint[i] = tempMatrix*spaceShipPoints[i];
@@ -197,6 +201,7 @@ void SpaceShip::update(float dt)
 	{
 			Vector2 acceleration(0.f,-dt*quickTurnAround);			
 			tempMatrix.Rotation(angle);
+
 			acceleration = tempMatrix*acceleration;
 			velocity = velocity+acceleration;
 		
@@ -205,6 +210,7 @@ void SpaceShip::update(float dt)
 	{
 			Vector2 acceleration(0.f,dt*quickTurnAround);				
 			tempMatrix.Rotation(angle);
+
 			acceleration = tempMatrix*acceleration;
 			velocity = velocity+acceleration;	
 	}
@@ -250,8 +256,9 @@ void SpaceShip::update(float dt)
 		}
 	}
 
+	rotatedMatirx.Rotation(angle);
 	
-
+	
 	initialPosition = position;	
 
 	position.x = position.x + velocity.x * dt*quickTurnAround;
