@@ -29,6 +29,9 @@
     <ClCompile Include="Vector3.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="MyRandomNumber.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -47,6 +50,9 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MyRandomNumber.h">
       <Filter>Math</Filter>
     </ClInclude>
   </ItemGroup>

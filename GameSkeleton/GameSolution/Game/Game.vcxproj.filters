@@ -11,6 +11,9 @@
     <ClCompile Include="GameSolution.cpp" />
     <ClCompile Include="ProjectileManager.cpp" />
     <ClCompile Include="squarePlanet.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleEffect.cpp" />
+    <ClCompile Include="VaryColor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SpaceShip.h" />
@@ -22,5 +25,8 @@
     <ClInclude Include="GameSolution.h" />
     <ClInclude Include="ProjectileManager.h" />
     <ClInclude Include="squarePlanet.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleEffect.h" />
+    <ClInclude Include="VaryColor.h" />
   </ItemGroup>
 </Project>

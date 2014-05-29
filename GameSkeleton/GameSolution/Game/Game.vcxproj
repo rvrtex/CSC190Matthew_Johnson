@@ -92,10 +92,13 @@
     <ClCompile Include="LerpingRoid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Missile.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleEffect.cpp" />
     <ClCompile Include="ProjectileManager.cpp" />
     <ClCompile Include="SpaceShip.cpp" />
     <ClCompile Include="squarePlanet.cpp" />
     <ClCompile Include="Turret.cpp" />
+    <ClCompile Include="VaryColor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boundary.h" />
@@ -103,10 +106,13 @@
     <ClInclude Include="GameSolution.h" />
     <ClInclude Include="LerpingRoid.h" />
     <ClInclude Include="Missile.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleEffect.h" />
     <ClInclude Include="ProjectileManager.h" />
     <ClInclude Include="SpaceShip.h" />
     <ClInclude Include="squarePlanet.h" />
     <ClInclude Include="Turret.h" />
+    <ClInclude Include="VaryColor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

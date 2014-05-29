@@ -5,12 +5,14 @@
 #include "Vector2.h"
 #include "Matrix3.h"
 #include "Turret.h"
+#include "GameSolution.h"
 
 class SpaceShip
 {
-public:
-	SpaceShip(ProjectileManager&);
 
+public:
+	SpaceShip(ProjectileManager&, GameSolution&);
+	SpaceShip(void);
 	Vector2 position;
 	Vector2 velocity;
 	bool outSideLine;

@@ -1,5 +1,6 @@
 #include "SpaceShip.h"
 #include "DrawValues.h"
+#include "ParticleEffect.h"
 
 
 const float SCREEN_WIDTH = 1024;
@@ -36,24 +37,30 @@ Vector2 wallPoints[] =
 	wallPieceFour
 };
 
-ProjectileManager myPm;
 unsigned int currentMode = 1;
+ProjectileManager myPm;
 bool wallMode;
 float angle = 0;
 float myDt;
 Turret myTurret;
 float reload;
 DrawValues dv;
-SpaceShip::SpaceShip(ProjectileManager& pm)
+GameSolution* myGm;
+
+SpaceShip::SpaceShip(void){}
+
+SpaceShip::SpaceShip(ProjectileManager& pm, GameSolution& gm)
 {
-	myPm = pm;
+	myPm =pm;
+	myGm = &gm;
+
 	myTurret = Turret(myPm);
 }
 
 
 void SpaceShip::ModeKeyPressed(Vector2& velocity)
 {
-	
+
 	//Pick mode
 	if(Core::Input::IsPressed('1'))
 	{
@@ -81,10 +88,11 @@ void SpaceShip::ModeKeyPressed(Vector2& velocity)
 			myTurret.FireButtonPressed(myDt);
 			reload = 0.0f;
 		}
-		
+
 	}
 	reload += myDt*2;
 }
+bool impact = false;
 
 void SpaceShip::draw(Core::Graphics& g)
 {
@@ -92,7 +100,7 @@ void SpaceShip::draw(Core::Graphics& g)
 	//matrix transform
 	Matrix3 transform;
 	Matrix3 finalMatrix;
-	
+
 	myTurret.draw(g,position);
 
 	for(unsigned int i = 0; i < NUM_LINES; i++)
@@ -110,6 +118,7 @@ void SpaceShip::draw(Core::Graphics& g)
 			const Vector2& second = wallPoints[(i+1)% NUM_LINES];
 			g.DrawLine(first.x,first.y,second.x,second.y);			
 		}
+
 	}
 	finalMatrix =transform*rotatedMatirx;
 	dv.DrawValue(g,200,200,finalMatrix);
@@ -146,7 +155,7 @@ void SpaceShip::update(float dt)
 			{
 				quadWallTwoVector = wallPoints[i]- wallPoints[i-1];
 			}
-		
+
 			quadWallNorm = PerpCCW(quadWallTwoVector);
 			quadNormalized = normalized(quadWallNorm);
 			quadShipResultVector = (position) - wallPoints[i];
@@ -156,20 +165,23 @@ void SpaceShip::update(float dt)
 
 			if(quadDotProd < 0 && quadLastDotProd > 0 )
 			{
+				ParticleEffect* part = new ParticleEffect(3000,1,position,velocity);
+				part->BounceEffect();
+				myGm ->AddToList(*part);
 				position = initialPosition;
 				velocity = velocity - (2*(Dot(velocity,quadNormalized)*quadNormalized));
 			}
 		}
-	
+
 	}
 	dt = dt*2;
 	//pick mode
 	ModeKeyPressed(velocity);
-	
+
 
 	//stear ship
 	unsigned int quickTurnAround = 10;
-//	int maxSpeed = 100;
+	//	int maxSpeed = 100;
 	Matrix3 tempMatrix;
 	Vector2 tempVector;
 	rotatedMatirx = tempMatrix;
@@ -181,38 +193,38 @@ void SpaceShip::update(float dt)
 		{
 			rotatedSpaceShipPoint[i] = tempMatrix*spaceShipPoints[i];
 		}
-		
-		
+
+
 	}
 	if(Core::Input::IsPressed(Core::Input::KEY_RIGHT))
 	{
 		angle = angle + ((1 * (2.0f*3.14f)) /100.0f);
 
 		tempMatrix.Rotation(angle);
-		
+
 		for(int i = 0; i < 4; i++)
 		{
 			rotatedSpaceShipPoint[i] = tempMatrix*spaceShipPoints[i];
 		}			
-		
+
 	}
-	
+
 	if(Core::Input::IsPressed(Core::Input::KEY_UP))
 	{
-			Vector2 acceleration(0.f,-dt*quickTurnAround);			
-			tempMatrix.Rotation(angle);
+		Vector2 acceleration(0.f,-dt*quickTurnAround);			
+		tempMatrix.Rotation(angle);
 
-			acceleration = tempMatrix*acceleration;
-			velocity = velocity+acceleration;
-		
+		acceleration = tempMatrix*acceleration;
+		velocity = velocity+acceleration;
+
 	}
 	if(Core::Input::IsPressed(Core::Input::KEY_DOWN))
 	{
-			Vector2 acceleration(0.f,dt*quickTurnAround);				
-			tempMatrix.Rotation(angle);
+		Vector2 acceleration(0.f,dt*quickTurnAround);				
+		tempMatrix.Rotation(angle);
 
-			acceleration = tempMatrix*acceleration;
-			velocity = velocity+acceleration;	
+		acceleration = tempMatrix*acceleration;
+		velocity = velocity+acceleration;	
 	}
 
 	//do the bounce of outside walls
@@ -257,8 +269,8 @@ void SpaceShip::update(float dt)
 	}
 
 	rotatedMatirx.Rotation(angle);
-	
-	
+
+
 	initialPosition = position;	
 
 	position.x = position.x + velocity.x * dt*quickTurnAround;
