@@ -10,7 +10,7 @@ class Profiler
 {
 	bool status;
 	const char* filename;
-	static const unsigned int MAX_FRAME_SAMPLES = 5000;
+	static const unsigned int MAX_FRAME_SAMPLES = 50000;
 	static const unsigned int MAX_PROFILE_CATEGORIES = 200;
 	int frameIndex;
 	unsigned int categoryIndex;

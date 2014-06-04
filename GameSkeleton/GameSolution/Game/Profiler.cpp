@@ -40,13 +40,14 @@ void Profiler::shutDown()
 		{
 			outStream << categories[cat].samples[frame];
 			outStream << getDelimiter(cat);
-			
+
 		}
 	}
 }
 
 void Profiler::newFrame()
 {
+	
 	assert(status);
 	if(frameIndex > 0)
 	{
@@ -55,28 +56,29 @@ void Profiler::newFrame()
 	frameIndex++;
 	assert(frameIndex < MAX_FRAME_SAMPLES);
 	categoryIndex = 0;
+	
 }
 
 void Profiler::addEntry(const char* categroyName, float time) 
 {
+	
+		assert(categoryIndex < MAX_PROFILE_CATEGORIES);
+		ProfileCatagory& pc = categories[categoryIndex];
+		if(frameIndex == 0)
+		{
+			pc.name = categroyName;
+			numUsedCategories++;
+			checkforDuplicateCategory(categroyName);
+		}
+		else
+		{
+			assert(pc.name == categroyName && categroyName != NULL);
+			assert(categoryIndex < numUsedCategories);
 
-	assert(categoryIndex < MAX_PROFILE_CATEGORIES);
-	ProfileCatagory& pc = categories[categoryIndex];
-	if(frameIndex == 0)
-	{
-		pc.name = categroyName;
-		numUsedCategories++;
-		checkforDuplicateCategory(categroyName);
-	}
-	else
-	{
-		assert(pc.name == categroyName && categroyName != NULL);
-		assert(categoryIndex < numUsedCategories);
-
-	}
-	categoryIndex++;
-	pc.samples[frameIndex] = time;
-
+		}
+		categoryIndex++;
+		pc.samples[frameIndex] = time;
+	
 };
 
 char Profiler::getDelimiter(unsigned int index) const
