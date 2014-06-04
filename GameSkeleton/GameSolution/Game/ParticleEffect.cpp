@@ -88,6 +88,7 @@ void ParticleEffect::BounceEffect()
 	float angle;
 	Matrix3 tempMatrix;
 	Vector2 tempVelocity;
+	isFinished = false;
 	for(int i = 0; i < numberOfParticlesInEffect; i++)
 	{
 		angle = RandomInRange(.01f,1.0f)*((2.0f*3.14f)/100.0f);

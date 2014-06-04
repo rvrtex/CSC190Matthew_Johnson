@@ -1,7 +1,8 @@
 #include "SpaceShip.h"
 #include "DrawValues.h"
 #include "ParticleEffect.h"
-
+#include "Profiler.h"
+#include "Timer.h"
 
 const float SCREEN_WIDTH = 1024;
 const float SCREEN_HEIGHT = 728;
@@ -49,8 +50,10 @@ GameSolution* myGm;
 
 SpaceShip::SpaceShip(void){}
 
-SpaceShip::SpaceShip(ProjectileManager& pm, GameSolution& gm)
+SpaceShip::SpaceShip(ProjectileManager& pm, GameSolution& gm, Timer* timer)
 {
+	timer;
+	//Profiler::getInstance().addEntry("SpaceShip",timer->Interval());
 	myPm =pm;
 	myGm = &gm;
 
@@ -136,7 +139,7 @@ int ousideLineNum = 0;
 
 void SpaceShip::update(float dt)
 {
-
+//	Profiler::getInstance().newFrame();
 	myDt = dt;
 	float quadDotProd = 0;
 	float quadLastDotProd = 0;
@@ -165,7 +168,7 @@ void SpaceShip::update(float dt)
 
 			if(quadDotProd < 0 && quadLastDotProd > 0 )
 			{
-				ParticleEffect* part = new ParticleEffect(3000,1,position,velocity);
+				ParticleEffect* part = new ParticleEffect(5000,1,position,velocity);
 				part->BounceEffect();
 				myGm ->AddToList(*part);
 				position = initialPosition;

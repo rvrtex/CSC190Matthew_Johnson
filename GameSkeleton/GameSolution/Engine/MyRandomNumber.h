@@ -2,10 +2,10 @@
 #define MYRANDOMNUMBER_H
 
 #include <stdlib.h>
+#include "ExportHeader.h"
 
 
-
-class MyRandomNumber
+class ENGINE_SHARED MyRandomNumber
 {
 public:
 	float MyRandomNumber::RandomFloat();

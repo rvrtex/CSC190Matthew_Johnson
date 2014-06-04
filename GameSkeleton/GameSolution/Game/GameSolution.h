@@ -5,16 +5,21 @@
 #include "ProjectileManager.h"
 #include "squarePlanet.h"
 #include "ParticleEffect.h"
+#include "Timer.h"
+#include "Enemy.h"
+
 
 class GameSolution
 {
+Enemy enemy;
 
 public:
 	
 
 	GameSolution(void);
+	Timer FPSTimer;
 	
-	void AddToList(ParticleEffect&);
+	static void AddToList(ParticleEffect&);
 	void draw(Core::Graphics&);
 	void update(float);
 	float angle;

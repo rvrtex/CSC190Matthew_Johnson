@@ -30,6 +30,7 @@ public:
 	void draw(Core::Graphics&);
 	void update(float);
 	void BounceEffect();
+	
 };
 
 

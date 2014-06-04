@@ -5,7 +5,7 @@
 #include "DrawValues.h"
 #include "ProjectileManager.h"
 #include "GameSolution.h"
-
+#include "Profiler.h"
 
 using Core::Input;
 
@@ -20,7 +20,11 @@ bool Update(float dt)
 {	
 	gs.update(dt);
 	if (Input::IsPressed(Input::KEY_ESCAPE))
+	{
+		Profiler::getInstance().shutDown();
+
 		return true;
+	}
 	return false;
 }
 
