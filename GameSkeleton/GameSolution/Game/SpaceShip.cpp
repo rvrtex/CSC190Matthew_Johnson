@@ -39,7 +39,7 @@ Vector2 wallPoints[] =
 };
 
 unsigned int currentMode = 1;
-ProjectileManager myPm;
+//ProjectileManager myPm;
 bool wallMode;
 float angle = 0;
 float myDt;
@@ -50,14 +50,14 @@ GameSolution* myGm;
 
 SpaceShip::SpaceShip(void){}
 
-SpaceShip::SpaceShip(ProjectileManager& pm, GameSolution& gm, Timer* timer)
+SpaceShip::SpaceShip(GameSolution& gm, Timer* timer)
 {
 	timer;
 	//Profiler::getInstance().addEntry("SpaceShip",timer->Interval());
-	myPm =pm;
+	//myPm =pm;
 	myGm = &gm;
 
-	myTurret = Turret(myPm);
+	myTurret = Turret();
 }
 
 

@@ -1,21 +1,25 @@
 #ifndef COLLISIONMANAGER_H
 #define COLLISIONMANAGER_H
 
-#include "ProjectileManager.h"
 #include "SpaceShip.h"
-#include "EnemyManager.h"
 #include "Core.h"
 #include "ParticleEffect.h"
+#include "Enemy.h"
+#include "Missile.h"
+#include <vector>
 
 class CollisionManager
 {
+	/*std::vector<Enemy> enemyShips;
+	std::vector<Missile> missilesFired;
+	*/
+
 public:
-	ProjectileManager* pm;
-	EnemyManager* em;
-	SpaceShip* ss;
-	GameSolution* gm;
-	CollisionManager(SpaceShip& spaceShip, ProjectileManager& projectileManager, EnemyManager& enemyManager, GameSolution& gm);
-	void draw(Core::Graphics&);
+	
+	CollisionManager();
+	static void AddEnemyShip(Enemy& e);
+	static void MissileFired(Missile& m);
+	void draw(Core::Graphics&, Vector2&);
 	void update(float, Vector2&);
 
 	

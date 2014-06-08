@@ -1,5 +1,6 @@
 C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTION\GAME\DEBUG\TIMER.OBJ
 C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTION\GAME\DEBUG\BOUNDARY.OBJ
+C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTION\GAME\DEBUG\COLLISIONMANAGER.OBJ
 C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTION\GAME\DEBUG\DRAWVALUES.OBJ
 C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTION\GAME\DEBUG\ENEMY.OBJ
 C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTION\GAME\DEBUG\ENEMYMANAGER.OBJ
@@ -16,7 +17,11 @@ C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTIO
 C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTION\GAME\DEBUG\TURRET.OBJ
 C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTION\GAME\DEBUG\VARYCOLOR.OBJ
 C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTION\GAME\DEBUG\VC110.PDB
+C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTION\DEBUG\GAME.ILK
+C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTION\DEBUG\GAME.EXE
+C:\USERS\MATTHEW\DOCUMENTS\GITHUB\CSC190MATTHEW_JOHNSON\GAMESKELETON\GAMESOLUTION\DEBUG\GAME.PDB
 C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\Boundary.obj
+C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\CollisionManager.obj
 C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\DrawValues.obj
 C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\Enemy.obj
 C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\EnemyManager.obj
@@ -36,5 +41,15 @@ C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolutio
 C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\cl.command.1.tlog
 C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\CL.read.1.tlog
 C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\CL.write.1.tlog
+C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\link-cvtres.read.1.tlog
+C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\link-cvtres.write.1.tlog
+C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\link-rc.read.1.tlog
+C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\link-rc.write.1.tlog
+C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\link.command.1.tlog
+C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\link.read.1.tlog
+C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\link.write.1.tlog
 C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\vc110.idb
 C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Debug\vc110.pdb
+C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Debug\Game.pdb
+C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Debug\Game.exe
+C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Debug\Game.ilk

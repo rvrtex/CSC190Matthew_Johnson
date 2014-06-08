@@ -1,11 +1,11 @@
 #include "Turret.h"
 
-ProjectileManager turretPM;
+//ProjectileManager turretPM;
 
-Turret::Turret(ProjectileManager& pm)
-{
-	turretPM = pm;
-}
+//Turret::Turret(ProjectileManager& pm)
+//{
+//	turretPM = pm;
+//}
 
 Turret::Turret(){};
 
@@ -57,7 +57,7 @@ void Turret::FireButtonPressed(float dt)
 	m->destructPoint = mousePosition;
 	m->startingPoint = myPosition;
 	m->myCurrentPosition = myPosition;
-	turretPM.MFired(*m);
+	CollisionManager::MissileFired(*m);
 }
 
 void Turret::update()

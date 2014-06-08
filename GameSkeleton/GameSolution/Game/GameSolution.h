@@ -7,6 +7,7 @@
 #include "ParticleEffect.h"
 #include "Timer.h"
 #include "Enemy.h"
+#include <vector>
 
 
 class GameSolution

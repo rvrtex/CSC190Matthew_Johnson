@@ -3,11 +3,14 @@
 #include "SpaceShip.h"
 #include "LerpingRoid.h"
 #include "DrawValues.h"
-#include "ProjectileManager.h"
+//#include "ProjectileManager.h"
 #include "GameSolution.h"
 #include "Profiler.h"
+#include "CollisionManager.h"
 
-ProjectileManager pm;
+//ProjectileManager pm;
+CollisionManager cm;
+
 SpaceShip meShip;
 LerpingRoid meLerp;
 Timer* timer;
@@ -36,7 +39,7 @@ GameSolution::GameSolution()
 	AddToList(*pe);
 
 	Profiler::getInstance().startUp("ProfileTest.csv");
-	meShip = SpaceShip(pm,*this, timer);
+	meShip = SpaceShip(*this, timer);
 
 
 	meShip.position = Vector2(500,300);
@@ -49,55 +52,7 @@ GameSolution::GameSolution()
 
 float myAngle = 0;
 
-squarePlanet recusivePlanets(int n, int cn,float angle, Core::Graphics& g, Matrix3 myPosition)
-{
-	Matrix3 translation;
-	Matrix3 rotation;
-	Matrix3 finalLocation;
-
-	angle;
-	myAngle = myAngle + ((-.1f * (2.0f*3.14f)) /100.0f);
-
-
-	Vector2 newPosition(30.0f*((float)cn+1),30.0f*((float)cn+1));
-	translation.Translation(newPosition);
-	rotation.Rotation(myAngle);
-	finalLocation = rotation*translation;
-	finalLocation = finalLocation*myPosition;
-
-
-	if(cn == n)
-	{		
-		squarePlanet sp;
-		sp.position = startingPosition;
-
-		for(int i = 0; i < 4; i++)
-		{
-			sp.dimensions[i] = Dimension[i]*((float)cn)+sp.position;
-		}		
-		sp.draw(g);
-		return sp;	
-	}
-	else
-	{		
-		squarePlanet sp = recusivePlanets(n,cn+1,myAngle,g,finalLocation);		
-
-		for(int i = 0; i < 4; i++)
-		{
-			sp.dimensions[i] = Dimension[i]*((float)cn+1);
-		}
-
-		for(int i = 0; i < 4; i++)
-		{
-			sp.dimensions[i] = finalLocation*sp.dimensions[i];
-			sp.dimensions[i] = sp.dimensions[i]+sp.position;
-		}
-		sp.draw(g);
-		return sp;
-
-	}
-}
-
+//
 void GameSolution::update(float dt)
 {	
 	
@@ -145,15 +100,15 @@ void GameSolution::draw(Core::Graphics& graphics)
 
 	{
 		timer->Start();
-		pm.draw(graphics,meShip.position);
+		cm.draw(graphics,meShip.position);
 		timer->Stop();
-		Profiler::getInstance().addEntry("PM Draw", timer->lastLapTime());
+		Profiler::getInstance().addEntry("CM Draw", timer->lastLapTime());
 
 	}
 
 
 	Matrix3 initialMatrix;
-	squarePlanet sp = recusivePlanets(3,0,0,graphics,initialMatrix);
+	//squarePlanet sp = recusivePlanets(3,0,0,graphics,initialMatrix);
 	{
 		timer->Start();
 		if(listOfParticleEffects.size() > 0)
@@ -186,3 +141,56 @@ void GameSolution::draw(Core::Graphics& graphics)
 	}
 	
 }
+
+
+
+
+
+//squarePlanet recusivePlanets(int n, int cn,float angle, Core::Graphics& g, Matrix3 myPosition)
+//{
+//	Matrix3 translation;
+//	Matrix3 rotation;
+//	Matrix3 finalLocation;
+//
+//	angle;
+//	myAngle = myAngle + ((-.1f * (2.0f*3.14f)) /100.0f);
+//
+//
+//	Vector2 newPosition(30.0f*((float)cn+1),30.0f*((float)cn+1));
+//	translation.Translation(newPosition);
+//	rotation.Rotation(myAngle);
+//	finalLocation = rotation*translation;
+//	finalLocation = finalLocation*myPosition;
+//
+//
+//	if(cn == n)
+//	{		
+//		squarePlanet sp;
+//		sp.position = startingPosition;
+//
+//		for(int i = 0; i < 4; i++)
+//		{
+//			sp.dimensions[i] = Dimension[i]*((float)cn)+sp.position;
+//		}		
+//		sp.draw(g);
+//		return sp;	
+//	}
+//	else
+//	{		
+//		squarePlanet sp = recusivePlanets(n,cn+1,myAngle,g,finalLocation);		
+//
+//		for(int i = 0; i < 4; i++)
+//		{
+//			sp.dimensions[i] = Dimension[i]*((float)cn+1);
+//		}
+//
+//		for(int i = 0; i < 4; i++)
+//		{
+//			sp.dimensions[i] = finalLocation*sp.dimensions[i];
+//			sp.dimensions[i] = sp.dimensions[i]+sp.position;
+//		}
+//		sp.draw(g);
+//		return sp;
+//
+//	}
+//}

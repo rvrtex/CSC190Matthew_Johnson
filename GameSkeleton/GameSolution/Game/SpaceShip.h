@@ -11,7 +11,7 @@ class SpaceShip
 {
 
 public:
-	SpaceShip(ProjectileManager&, GameSolution&, Timer*);
+	SpaceShip(GameSolution&, Timer*);
 	SpaceShip(void);
 	Vector2 position;
 	Vector2 velocity;
