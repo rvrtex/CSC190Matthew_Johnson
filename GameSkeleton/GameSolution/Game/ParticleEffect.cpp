@@ -7,9 +7,9 @@ ParticleEffect::ParticleEffect(void)
 
 
 
-ParticleEffect::ParticleEffect(int numberOfParticles, int effect, Vector2 position, Vector2 velocity)
+ParticleEffect::ParticleEffect(int numberOfParticles, int effect, Vector2 position, Vector2 velocity, float dt)
 {
-
+	myDT = dt;
 	numberOfParticlesInEffect = numberOfParticles;
 	particleArray = new Particle[numberOfParticlesInEffect];
 	this->position = position;
@@ -32,15 +32,17 @@ void ParticleEffect::draw(Core::Graphics& g)
 		if(numberOfParticlesInEffect == numOfDead)
 		{
 			isFinished = true;
+		//	delete [] particleArray;
 		}
 
 		if(effect == 1)
 		{
-			if(particleArray[i].position.x > 1024 || particleArray[i].position.x < 0)
+			if(particleArray[i].lifetime < particleArray[i].Maxlifetime)
 			{
-				particleArray[i].isAlive = false;
+			
+				particleArray[i].lifetime = particleArray[i].lifetime + myDT*.5f;
 			}
-			else if(particleArray[i].position.y > 728 || particleArray[i].position.y < 0)
+			else
 			{
 				particleArray[i].isAlive = false;
 			}
@@ -50,9 +52,9 @@ void ParticleEffect::draw(Core::Graphics& g)
 			float angle;
 			Matrix3 tempMatrix;
 			Vector2 tempVelocity;
-			angle = RandomInRange(1.0f,100.0f)*((2.0f*3.14f)/100.0f);
+			angle = MyRandomNumber::RandomInRange(1.0f,100.0f)*((2.0f*3.14f)/100.0f);
 			tempMatrix.Rotation(angle);
-			float speedDiff = RandomInRange(-5.0f,5.0f);
+			float speedDiff = MyRandomNumber::RandomInRange(-5.0f,5.0f);
 			tempVelocity = tempMatrix*(velocity+speedDiff);
 		 
 			if(particleArray[i].position.x > 1024 || particleArray[i].position.x < 0)
@@ -91,9 +93,9 @@ void ParticleEffect::BounceEffect()
 	isFinished = false;
 	for(int i = 0; i < numberOfParticlesInEffect; i++)
 	{
-		angle = RandomInRange(.01f,1.0f)*((2.0f*3.14f)/100.0f);
+		angle = MyRandomNumber::RandomInRange(.01f,1.0f)*((2.0f*3.14f)/100.0f);
 		tempMatrix.Rotation(angle);
-		float speedDiff = RandomInRange(-10.0f,10.0f);
+		float speedDiff = MyRandomNumber::RandomInRange(-10.0f,10.0f);
 		tempVelocity = tempMatrix*(velocity+speedDiff);
 		Particle p;
 		p.position = this->position;
@@ -116,10 +118,10 @@ void ParticleEffect::TunnelEffect()
 	{
 		Particle p;
 
-		angle = RandomInRange(.01f,1.0f)*((2.0f*3.14f)/100.0f);
+		angle = MyRandomNumber::RandomInRange(.01f,1.0f)*((2.0f*3.14f)/100.0f);
 		tempMatrix.Rotation(angle);
-		velocity.x = RandomInRange(-5.0f,5.0f);
-		velocity.y = RandomInRange(-5.0f,5.0f);
+		velocity.x = MyRandomNumber::RandomInRange(-5.0f,5.0f);
+		velocity.y = MyRandomNumber::RandomInRange(-5.0f,5.0f);
 		tempVelocity = tempMatrix*(velocity);
 		p.position = this->position;
 		p.velocity = tempVelocity;
@@ -128,13 +130,3 @@ void ParticleEffect::TunnelEffect()
 		particleArray[i] = p;	
 	}
 }
-float ParticleEffect::RandomFloat()
-{
-	return (float) rand()/ RAND_MAX;
-}
-
-float ParticleEffect::RandomInRange(float min, float max)
-{
-	return RandomFloat() * (max - min + 1) + min;
-}
-	

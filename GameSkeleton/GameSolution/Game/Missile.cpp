@@ -1,27 +1,43 @@
 #include "Missile.h"
 
 Vector2 missileShape[] = {
-	Vector2(0.0f,1.0f),
+	Vector2(0.0f,5.0f),
 	Vector2(0.0f,0.0f)
 };
 
 Vector2 rotatedMissileShape[] = {
-	Vector2(0.0f,1.0f),
+	Vector2(0.0f,5.0f),
 	Vector2(0.0f,0.0f)
 };
 
+Missile::Missile()
+{
+	isAlive = false;
+	myScaler = 1.5f;
+	quickTurnAround = 10;	
+}
 
 
 Missile::Missile(float dt)
 {
 	missileDt = dt;
-	isAlive = true;
-	myScaler = .9f;
+	isAlive = false;
+	myScaler = 1.5f;
 	quickTurnAround = 10;	
+}
+
+void Missile::setMissileVelocity()
+{
+
+
+
 }
 void Missile::draw(Core::Graphics& g)
 {	 
-	myScaler += missileDt *.9f;
+	missileDt = GameSolution::GetDT();
+
+	myScaler += missileDt *2.0f;
+	
 	vectorOfTurretToMouseClickLocation = startingPoint - destructPoint;
 	normolizedVector = normalized(vectorOfTurretToMouseClickLocation);
 	normolizedVector = normolizedVector*myScaler;
@@ -29,7 +45,7 @@ void Missile::draw(Core::Graphics& g)
 	missileTransform.Translation(myCurrentPosition);
 	Vector2 acceleration(0.f,-missileDt*quickTurnAround);			
 
-	if(myScaler > 4)
+	if(myScaler > 6)
 	{
 		isAlive = false;
 	}
@@ -43,8 +59,10 @@ void Missile::draw(Core::Graphics& g)
 		g.DrawLine(first.x,first.y,second.x,second.y);
 		}
 	lastPosition = myCurrentPosition;
-	myCurrentPosition.x = myCurrentPosition.x + velocity.x * missileDt*quickTurnAround;
-	myCurrentPosition.y = myCurrentPosition.y + velocity.y * missileDt*quickTurnAround;
+	velocity.x = missileDt*quickTurnAround;
+	velocity.y = missileDt*quickTurnAround;
+	myCurrentPosition.x = myCurrentPosition.x + velocity.x;
+	myCurrentPosition.y = myCurrentPosition.y + velocity.y;
 }
 
 

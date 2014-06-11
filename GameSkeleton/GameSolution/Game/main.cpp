@@ -21,7 +21,7 @@ bool Update(float dt)
 	gs.update(dt);
 	if (Input::IsPressed(Input::KEY_ESCAPE))
 	{
-		Profiler::getInstance().shutDown();
+		//Profiler::getInstance().shutDown();
 
 		return true;
 	}
@@ -31,13 +31,14 @@ bool Update(float dt)
 
 void Draw(Core::Graphics& graphics)
 {
-	
-	
+	//ASSERT(true == false);
+
+
 	gs.draw(graphics);
 
 	//DrawValues::DrawValue(graphics,100,100,
 	
-	graphics.DrawString(50, 20, "1: Bounce, 2: Wrap, 3: Arbitray Walls, 4: Hammer Time, Left Mouse button fires the missle; turret follows the mouse");
+	graphics.DrawString(50, 20, "1: Bounce, 2: Wrap, 3: Arbitray Walls, H: Hammer Time, Left Mouse button fires the missle; turret follows the mouse");
 	
 }
 

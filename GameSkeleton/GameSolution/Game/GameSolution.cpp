@@ -7,14 +7,15 @@
 #include "GameSolution.h"
 #include "Profiler.h"
 #include "CollisionManager.h"
+#include "SpaceShip.h"
 
 //ProjectileManager pm;
-CollisionManager cm;
 
 SpaceShip meShip;
-LerpingRoid meLerp;
-Timer* timer;
+//LerpingRoid meLerp;
+//Timer* timer;
 float myDT;
+CollisionManager *cm;
 
 
 DrawValues drawValues;
@@ -30,33 +31,41 @@ Vector2 Dimension[] = {
 };
 GameSolution::GameSolution()
 {
-	timer =  new Timer();
-	FPSTimer.Initialize();
-	Vector2 startPosition(512.0f,364.0f);
 
-	ParticleEffect* pe = new ParticleEffect(500,2,startPosition,startPosition);
+	//timer =  new Timer();
+	//FPSTimer.Initialize();
+	Vector2 startPosition(512.0f,364.0f);
+	Vector2 firstEnemyStartingPosition(0.0f,MyRandomNumber::RandomInRange(0.0f,728.0f));
+
+	ParticleEffect* pe = new ParticleEffect(500,2,startPosition,startPosition,myDT);
 	pe->TunnelEffect();
 	AddToList(*pe);
 
-	Profiler::getInstance().startUp("ProfileTest.csv");
-	meShip = SpaceShip(*this, timer);
+	//Profiler::getInstance().startUp("ProfileTest.csv");
+
+	meShip = SpaceShip(*this);
 
 
 	meShip.position = Vector2(500,300);
-	meLerp.position = Vector2(+50.0f,50.0f);
-	enemy.position = Vector2(0,0);
+	//meLerp.position = Vector2(+50.0f,50.0f);
+	cm = new CollisionManager();
+
 
 }
+float GameSolution::GetDT()
+{
+	return myDT;
+}
 
-
+float gameScore = 0;
 
 float myAngle = 0;
 
 //
 void GameSolution::update(float dt)
 {	
-	
 	myDT = dt;
+	cm->update(myDT,meShip.position);
 }
 
 void GameSolution::AddToList(ParticleEffect &pe)
@@ -64,45 +73,51 @@ void GameSolution::AddToList(ParticleEffect &pe)
 	listOfParticleEffects.push_back(&pe);
 }
 
+void GameSolution::AddToScore(float incramentAmount)
+{
+	gameScore = gameScore+incramentAmount;
+}
+
+
 void GameSolution::draw(Core::Graphics& graphics)
 {
-	timer->lap();
-	FPSTimer.lap();
-	Profiler::getInstance().newFrame();
+	//timer->lap();
+	//FPSTimer.lap();
+	//Profiler::getInstance().newFrame();
 	meShip.update(myDT);
-	meLerp.update(myDT);
+	//meLerp.update(myDT);
 
-	float timerEleapsed;
+	//float timerEleapsed;
 
-	timerEleapsed =  FPSTimer.lastLapTime();
-	graphics.DrawString(550,600,"SPF");
-	drawValues.DrawValue(graphics,600,600,timerEleapsed);
-	graphics.DrawString(550,650,"FPS");
-	drawValues.DrawValue(graphics,600,650,(1/timerEleapsed));
+	//timerEleapsed =  FPSTimer.lastLapTime();
+	//graphics.DrawString(550,600,"SPF");
+	//drawValues.DrawValue(graphics,600,600,timerEleapsed);
+	//graphics.DrawString(550,650,"FPS");
+	//drawValues.DrawValue(graphics,600,650,(1/timerEleapsed));
 
-	timer->Initialize();
+	//timer->Initialize();
 	{
 
-		timer->Start();
+		//timer->Start();
 		meShip.draw(graphics);
-		timer->Stop();
-		Profiler::getInstance().addEntry("Ship Draw", timer->lastLapTime());
+		//timer->Stop();
+		//Profiler::getInstance().addEntry("Ship Draw", timer->lastLapTime());
 	}
 
 	{
-		timer->Start();
-		meLerp.draw(graphics);
-		timer->Stop();
-		Profiler::getInstance().addEntry("Lerp Draw", timer->lastLapTime());
+		//timer->Start();
+	//	meLerp.draw(graphics);
+		//timer->Stop();
+		//Profiler::getInstance().addEntry("Lerp Draw", timer->lastLapTime());
 
 	}
 
 
 	{
-		timer->Start();
-		cm.draw(graphics,meShip.position);
-		timer->Stop();
-		Profiler::getInstance().addEntry("CM Draw", timer->lastLapTime());
+		//timer->Start();
+		cm->draw(graphics,meShip.position);
+		//timer->Stop();
+		//Profiler::getInstance().addEntry("CM Draw", timer->lastLapTime());
 
 	}
 
@@ -110,7 +125,7 @@ void GameSolution::draw(Core::Graphics& graphics)
 	Matrix3 initialMatrix;
 	//squarePlanet sp = recusivePlanets(3,0,0,graphics,initialMatrix);
 	{
-		timer->Start();
+		//timer->Start();
 		if(listOfParticleEffects.size() > 0)
 		{
 			std::vector<ParticleEffect*> tempListForDeleting;
@@ -134,11 +149,14 @@ void GameSolution::draw(Core::Graphics& graphics)
 				listOfParticleEffects.erase(std::find(listOfParticleEffects.begin(), listOfParticleEffects.end(), &pe), listOfParticleEffects.end());
 			}
 		}
-		timer->Stop();
-		Profiler::getInstance().addEntry("PE Draw", timer->lastLapTime());
+		//timer->Stop();
+		//Profiler::getInstance().addEntry("PE Draw", timer->lastLapTime());
 		
-		timer->shutdown();
+		//timer->shutdown();
 	}
+	
+	drawValues.DrawValue(graphics);
+	drawValues.DrawValue(graphics,"Score: ",gameScore);
 	
 }
 

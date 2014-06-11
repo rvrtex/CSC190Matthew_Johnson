@@ -4,7 +4,7 @@
 #include "Vector2.h"
 #include "Core.h"
 #include "Matrix3.h"
-
+#include "GameSolution.h"
 
 
 class Missile
@@ -30,7 +30,7 @@ Vector2 resultVector;
 
 	bool isAlive;
 
-
+	void setMissileVelocity();
 	void draw(Core::Graphics&);
 	void update(float);
 };

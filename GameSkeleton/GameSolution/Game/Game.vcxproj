@@ -51,7 +51,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LOG_ON;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\Engine;$(SolutionDir)\Core\include</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -92,13 +92,14 @@
     <ClCompile Include="DrawValues.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="EnemyTypeOne.cpp" />
+    <ClCompile Include="EnemyTypeTwo.cpp" />
     <ClCompile Include="GameSolution.cpp" />
     <ClCompile Include="LerpingRoid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleEffect.cpp" />
-    <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="ProjectileManager.cpp" />
     <ClCompile Include="SpaceShip.cpp" />
     <ClCompile Include="squarePlanet.cpp" />
@@ -112,12 +113,13 @@
     <ClInclude Include="DrawValues.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="EnemyTypeOne.h" />
+    <ClInclude Include="EnemyTypeTwo.h" />
     <ClInclude Include="GameSolution.h" />
     <ClInclude Include="LerpingRoid.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleEffect.h" />
-    <ClInclude Include="Profiler.h" />
     <ClInclude Include="ProjectileManager.h" />
     <ClInclude Include="SpaceShip.h" />
     <ClInclude Include="squarePlanet.h" />

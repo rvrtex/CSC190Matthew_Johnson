@@ -48,13 +48,13 @@ void Profiler::shutDown()
 void Profiler::newFrame()
 {
 	
-	assert(status);
+	//assert(status);
 	if(frameIndex > 0)
 	{
-		assert(categoryIndex == numUsedCategories);
+		//assert(categoryIndex == numUsedCategories);
 	}
 	frameIndex++;
-	assert(frameIndex < MAX_FRAME_SAMPLES);
+	//assert(frameIndex < MAX_FRAME_SAMPLES);
 	categoryIndex = 0;
 	
 }
@@ -62,7 +62,7 @@ void Profiler::newFrame()
 void Profiler::addEntry(const char* categroyName, float time) 
 {
 	
-		assert(categoryIndex < MAX_PROFILE_CATEGORIES);
+		//assert(categoryIndex < MAX_PROFILE_CATEGORIES);
 		ProfileCatagory& pc = categories[categoryIndex];
 		if(frameIndex == 0)
 		{
@@ -72,8 +72,8 @@ void Profiler::addEntry(const char* categroyName, float time)
 		}
 		else
 		{
-			assert(pc.name == categroyName && categroyName != NULL);
-			assert(categoryIndex < numUsedCategories);
+			//assert(pc.name == categroyName && categroyName != NULL);
+			//assert(categoryIndex < numUsedCategories);
 
 		}
 		categoryIndex++;

@@ -47,12 +47,16 @@ Turret myTurret;
 float reload;
 DrawValues dv;
 GameSolution* myGm;
+bool spaceShipIsAlive;
+bool onMainMenu;
 
 SpaceShip::SpaceShip(void){}
 
-SpaceShip::SpaceShip(GameSolution& gm, Timer* timer)
+SpaceShip::SpaceShip(GameSolution& gm)
 {
-	timer;
+	spaceShipIsAlive = false;
+	onMainMenu = true;
+	//timer;
 	//Profiler::getInstance().addEntry("SpaceShip",timer->Interval());
 	//myPm =pm;
 	myGm = &gm;
@@ -60,7 +64,10 @@ SpaceShip::SpaceShip(GameSolution& gm, Timer* timer)
 	myTurret = Turret();
 }
 
-
+void SpaceShip::setIsAlive(bool setIsAlive)
+{
+	spaceShipIsAlive = setIsAlive;
+}
 void SpaceShip::ModeKeyPressed(Vector2& velocity)
 {
 
@@ -84,48 +91,71 @@ void SpaceShip::ModeKeyPressed(Vector2& velocity)
 	{
 		velocity.x = velocity.y = 0;
 	}
+	if(Core::Input::IsPressed('S'))
+	{
+		spaceShipIsAlive = true;
+		onMainMenu = false;
+		EnemyTypeTwo* ett = new EnemyTypeTwo();
+		CollisionManager::AddEnemyShip(*ett);
+	}
 	if(Core::Input::IsPressed(Core::Input::BUTTON_LEFT))
-	{		
+	{		if(spaceShipIsAlive)
+	{
 		if(reload > 1)
 		{
 			myTurret.FireButtonPressed(myDt);
 			reload = 0.0f;
 		}
-
 	}
-	reload += myDt*2;
+	}
+	reload += myDt*4;
 }
 bool impact = false;
 
+
 void SpaceShip::draw(Core::Graphics& g)
 {
-	const unsigned int NUM_LINES = sizeof(rotatedSpaceShipPoint)/sizeof(*rotatedSpaceShipPoint);
-	//matrix transform
-	Matrix3 transform;
-	Matrix3 finalMatrix;
-
-	myTurret.draw(g,position);
-
-	for(unsigned int i = 0; i < NUM_LINES; i++)
+	if(spaceShipIsAlive)
 	{
-		transform.Translation(position);
-		const Vector2 first = transform* rotatedSpaceShipPoint[i];
-		const Vector2 second = transform * rotatedSpaceShipPoint[(i+1)% NUM_LINES];
-		g.DrawLine(first.x,first.y,second.x,second.y);
-		;}
-	if(wallMode)
-	{
-		for(unsigned int i = 0; i < 4; i++)
+		const unsigned int NUM_LINES = sizeof(rotatedSpaceShipPoint)/sizeof(*rotatedSpaceShipPoint);
+		//matrix transform
+		Matrix3 transform;
+		Matrix3 finalMatrix;
+
+		myTurret.draw(g,position);
+
+		for(unsigned int i = 0; i < NUM_LINES; i++)
 		{
-			const Vector2& first = wallPoints[i];
-			const Vector2& second = wallPoints[(i+1)% NUM_LINES];
-			g.DrawLine(first.x,first.y,second.x,second.y);			
+			transform.Translation(position);
+			const Vector2 first = transform* rotatedSpaceShipPoint[i];
+			const Vector2 second = transform * rotatedSpaceShipPoint[(i+1)% NUM_LINES];
+			g.DrawLine(first.x,first.y,second.x,second.y);
+			;}
+		if(wallMode)
+		{
+			for(unsigned int i = 0; i < 4; i++)
+			{
+				const Vector2& first = wallPoints[i];
+				const Vector2& second = wallPoints[(i+1)% NUM_LINES];
+				g.DrawLine(first.x,first.y,second.x,second.y);			
+			}
+
 		}
-
+		finalMatrix =transform*rotatedMatirx;
+		//dv.DrawValue(g,200,200,finalMatrix);
 	}
-	finalMatrix =transform*rotatedMatirx;
-	dv.DrawValue(g,200,200,finalMatrix);
+	else
+	{
+		if(onMainMenu)
+		{
+		g.DrawString(450,324,"Press 'S' to start game");
 
+		}
+		else
+		{
+		g.DrawString(350,324,"YOU LOSE!! Press 'S' again to be invicible, restart the game to restart");
+		}
+	}
 }
 
 Vector2 quadShipResultVector; 
@@ -139,7 +169,7 @@ int ousideLineNum = 0;
 
 void SpaceShip::update(float dt)
 {
-//	Profiler::getInstance().newFrame();
+	//	Profiler::getInstance().newFrame();
 	myDt = dt;
 	float quadDotProd = 0;
 	float quadLastDotProd = 0;
@@ -168,7 +198,7 @@ void SpaceShip::update(float dt)
 
 			if(quadDotProd < 0 && quadLastDotProd > 0 )
 			{
-				ParticleEffect* part = new ParticleEffect(5000,1,position,velocity);
+				ParticleEffect* part = new ParticleEffect(5000,1,position,velocity,dt);
 				part->BounceEffect();
 				myGm ->AddToList(*part);
 				position = initialPosition;
@@ -188,6 +218,9 @@ void SpaceShip::update(float dt)
 	Matrix3 tempMatrix;
 	Vector2 tempVector;
 	rotatedMatirx = tempMatrix;
+
+	if(spaceShipIsAlive)
+	{
 	if(Core::Input::IsPressed(Core::Input::KEY_LEFT))
 	{
 		angle = angle + ((-1 * (2.0f*3.14f)) /100.0f);
@@ -199,6 +232,7 @@ void SpaceShip::update(float dt)
 
 
 	}
+	
 	if(Core::Input::IsPressed(Core::Input::KEY_RIGHT))
 	{
 		angle = angle + ((1 * (2.0f*3.14f)) /100.0f);
@@ -229,7 +263,7 @@ void SpaceShip::update(float dt)
 		acceleration = tempMatrix*acceleration;
 		velocity = velocity+acceleration;	
 	}
-
+	}
 	//do the bounce of outside walls
 	if(currentMode == 1)
 	{

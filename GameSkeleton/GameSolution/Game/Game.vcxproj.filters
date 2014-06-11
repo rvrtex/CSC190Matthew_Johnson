@@ -15,12 +15,11 @@
     <ClCompile Include="ParticleEffect.cpp" />
     <ClCompile Include="VaryColor.cpp" />
     <ClCompile Include="..\Engine\Timer.cpp" />
-    <ClCompile Include="Profiler.cpp">
-      <Filter>Debug</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="EnemyTypeOne.cpp" />
+    <ClCompile Include="EnemyTypeTwo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SpaceShip.h" />
@@ -36,16 +35,10 @@
     <ClInclude Include="ParticleEffect.h" />
     <ClInclude Include="VaryColor.h" />
     <ClInclude Include="..\Engine\Timer.h" />
-    <ClInclude Include="Profiler.h">
-      <Filter>Debug</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="CollisionManager.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Debug">
-      <UniqueIdentifier>{73c888cc-4707-44d1-87ff-b8c4acff7c9f}</UniqueIdentifier>
-    </Filter>
+    <ClInclude Include="EnemyTypeOne.h" />
+    <ClInclude Include="EnemyTypeTwo.h" />
   </ItemGroup>
 </Project>

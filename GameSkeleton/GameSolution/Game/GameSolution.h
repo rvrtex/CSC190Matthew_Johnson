@@ -12,15 +12,16 @@
 
 class GameSolution
 {
-Enemy enemy;
-
 public:
 	
 
 	GameSolution(void);
 	Timer FPSTimer;
 	
+	static float GetDT();
 	static void AddToList(ParticleEffect&);
+	static void AddToScore(float incramentAmount);
+
 	void draw(Core::Graphics&);
 	void update(float);
 	float angle;

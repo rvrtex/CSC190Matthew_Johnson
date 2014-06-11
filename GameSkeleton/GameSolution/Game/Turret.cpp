@@ -52,12 +52,12 @@ Vector2 mousePosition;
 
 void Turret::FireButtonPressed(float dt)
 {
-
-	Missile* m = new Missile(dt);
+	dt;
+	/*Missile* m = new Missile(dt);
 	m->destructPoint = mousePosition;
 	m->startingPoint = myPosition;
-	m->myCurrentPosition = myPosition;
-	CollisionManager::MissileFired(*m);
+	m->myCurrentPosition = myPosition;*/
+	CollisionManager::MissileFired(myPosition,mousePosition);
 }
 
 void Turret::update()

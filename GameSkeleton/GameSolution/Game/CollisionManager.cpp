@@ -1,60 +1,119 @@
 #include "CollisionManager.h"
+#include "DrawValues.h"
+
+Missile missiles[10];
 
 
+SpaceShip * myShip;
 
-CollisionManager::CollisionManager()
-{
 
+CollisionManager::CollisionManager(){
+
+	EnemyTypeOne* eto = new EnemyTypeOne();
+	
+	AddEnemyShip(*eto);
+	
+
+	for(int i = 0; i < 10; i++)
+	{
+		Missile *m = new Missile();
+		m->isAlive = false;
+		missiles[i] = *m;
+	}
 }
 
 
-static std::vector<Missile> missilesFired;
-static std::vector<Enemy> enemyShips;
+
+static std::vector<Enemy*> enemyShips;
 
 
 void CollisionManager::AddEnemyShip(Enemy& e)
 {
-	enemyShips.push_back(e);
+
+	enemyShips.push_back(&e);
 };
 
-void CollisionManager::MissileFired(Missile& m)
+void CollisionManager::MissileFired(Vector2& shipPosition, Vector2& endPosition)
 {
-	missilesFired.push_back(m);
+	for(int i = 0; i < 10; i++)
+	{
+		if(!missiles[i].isAlive)
+		{
+			missiles[i].isAlive = true;
+			missiles[i].startingPoint = shipPosition;
+			missiles[i].destructPoint = endPosition;
+			missiles[i].myCurrentPosition = shipPosition;
+			missiles[i].myScaler = 1.5f;
+			missiles[i].setMissileVelocity();
+			break;
+		}
+	}
 };
 void CollisionManager::draw(Core::Graphics& g, Vector2& shipPostion)
 {
 	Vector2 distance;
+	
 	float lenghOfdistance;
-	for(std::vector<Missile>::size_type  i = 0; i < missilesFired.size(); ++i)
+
+
+
+	for(int i = 0; i < 10; ++i)
 	{
 		for(std::vector<Enemy>::size_type j = 0; j < enemyShips.size(); j++)
 		{
+			
+			distance = shipPostion - enemyShips[j]->position;
+			lenghOfdistance = Length(distance);
+			if(lenghOfdistance < 30 && spaceShipLives)
+			{
+				enemyShips[j]->HasDied();
+				SpaceShip::setIsAlive(false);
+				spaceShipLives = false;
 
-			if(missilesFired[i].isAlive && enemyShips[j].isAlive)
+			}
+
+			if(missiles[i].isAlive && enemyShips[j]->isAlive)
 			{			
-				distance = missilesFired[i].myCurrentPosition - enemyShips[j].position;
+				distance = missiles[i].myCurrentPosition - enemyShips[j]->position;
 				lenghOfdistance = Length(distance);
 				if(lenghOfdistance < 7)
 				{
-					ParticleEffect* pe = new ParticleEffect(500,1,enemyShips[j].position,enemyShips[j].velocity);
+					float tempScore = enemyShips[j]->scoreValue;
+					GameSolution::AddToScore(tempScore);
+					ParticleEffect* pe = new ParticleEffect(500,1,enemyShips[j]->position,enemyShips[j]->velocity, GameSolution::GetDT());
 					pe->BounceEffect();
 					GameSolution::AddToList(*pe);
-					missilesFired[i].isAlive = false;
-					enemyShips[j].position = Vector2(0,0);
-					
+					missiles[i].isAlive = false;
+					enemyShips[j]->HasDied();
+
 				}	
-				
+
 			}
-			enemyShips[j].draw(g);
-			
+			enemyShips[j]->Draw(g);
+
 		}
-		if(missilesFired[i].isAlive)
-			{
-				missilesFired[i].draw(g);
-			}
+		if(missiles[i].isAlive)
+		{
+			missiles[i].draw(g);
+		}
 	}
+	
 	shipPostion;
-	};
-void CollisionManager::update(float dt, Vector2& shipPosition){dt;shipPosition;};
+
+	
+	
+
+	
+	
+};
+
+void CollisionManager::update(float dt, Vector2& shipPosition){dt; shipPosition;
+
+for(std::vector<Enemy>::size_type j = 0; j < enemyShips.size(); j++)
+{
+	enemyShips[j]->Update(shipPosition);
+}
+
+};
 
 

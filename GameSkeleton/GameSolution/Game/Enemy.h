@@ -3,15 +3,21 @@
 
 #include "Vector2.h"
 #include "Core.h"
+#include "MyRandomNumber.h"
 class Enemy
 {
+protected:
+
 public:
-	Enemy(void);
+	bool isAlive;
 	Vector2 position;
 	Vector2 velocity;
-	void draw(Core::Graphics&);
-	void update(Vector2&);
-	bool isAlive;
+	float scoreValue;
+	virtual void Draw(Core::Graphics&);
+	virtual void Update(Vector2&);
+	virtual void ResetPosition();
+	virtual void HasDied();
+
 };
 
 #endif // !ENEMY_H

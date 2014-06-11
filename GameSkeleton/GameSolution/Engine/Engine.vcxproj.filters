@@ -12,6 +12,9 @@
     <Filter Include="Math">
       <UniqueIdentifier>{770b8e5e-70c8-46f2-b9de-e3115d19f74f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{bca92678-eec9-4021-867a-63169bc6d5f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -32,12 +35,15 @@
     <ClCompile Include="MyRandomNumber.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="..\Game\Profiler.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExportHeader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
@@ -55,5 +61,26 @@
     <ClInclude Include="MyRandomNumber.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="..\Game\Profiler.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Assert.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="ExportHeader.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugMemory.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine.rc" />
   </ItemGroup>
 </Project>

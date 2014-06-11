@@ -5,11 +5,12 @@
 #include "ExportHeader.h"
 
 
-class ENGINE_SHARED MyRandomNumber
+class MyRandomNumber
 {
 public:
-	float MyRandomNumber::RandomFloat();
-	float MyRandomNumber::RandomInRange(float min, float max);
+	ENGINE_SHARED static float MyRandomNumber::RandomFloat();
+	ENGINE_SHARED static float MyRandomNumber::RandomInRange(float min, float max);
+
 };
 
 #endif // !MYRANDOMNUMBER_H

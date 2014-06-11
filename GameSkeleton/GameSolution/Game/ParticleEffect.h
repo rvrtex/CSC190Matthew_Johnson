@@ -6,6 +6,8 @@
 #include "Vector2.h"
 #include "MyRandomNumber.h"
 #include "VaryColor.h"
+#include "DebugMemory.h"
+
 
 
 
@@ -16,20 +18,19 @@ class ParticleEffect
 	MyRandomNumber rn;	
 	Vector2 position;
 	Vector2 velocity;
+	float myDT;
 	
 
 public:
 	bool isFinished;
 	int effect;
 	void ParticleEffect::CleanUpParticleEffect(void);
-	float ParticleEffect::RandomFloat();
-	float ParticleEffect::RandomInRange(float min, float max);
-	ParticleEffect(void);
-	ParticleEffect(int numberOfParticles,int effect, Vector2 position, Vector2 velocity);
+	ParticleEffect::ParticleEffect(void);
+	ParticleEffect::ParticleEffect(int numberOfParticles,int effect, Vector2 position, Vector2 velocity,float);
 	void ParticleEffect::TunnelEffect();
-	void draw(Core::Graphics&);
-	void update(float);
-	void BounceEffect();
+	void ParticleEffect::draw(Core::Graphics&);
+	void ParticleEffect::update(float);
+	void ParticleEffect::BounceEffect();
 	
 };
 

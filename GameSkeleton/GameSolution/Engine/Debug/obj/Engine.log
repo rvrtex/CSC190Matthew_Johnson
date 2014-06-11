@@ -1,28 +1,35 @@
-﻿Build started 6/8/2014 1:57:28 PM.
-     1>Project "C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Engine\Engine.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 6/10/2014 7:28:27 PM.
+     1>Project "C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Engine\Engine.vcxproj" on node 2 (Build target(s)).
        Project file contains ToolsVersion="12.0". This toolset may be unknown or missing, in which case you may be able to resolve this by installing the appropriate version of MSBuild, or the build may have been forced to a particular ToolsVersion for policy reasons. Treating the project as if it had ToolsVersion="4.0". For more information, please see http://go.microsoft.com/fwlink/?LinkId=291333.
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(345,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(346,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\..\GameSolution\Core\include /ZI /nologo /W4 /WX /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D ENGINE_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\obj\\" /Fd"Debug\obj\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt dllmain.cpp Engine.cpp Matrix2.cpp Matrix3.cpp MyRandomNumber.cpp Vector3.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\..\GameSolution\Core\include /ZI /nologo /W4 /WX /Od /Oy- /D LOG_ON /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D ENGINE_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\obj\\" /Fd"Debug\obj\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Game\Profiler.cpp dllmain.cpp Engine.cpp Logger.cpp Matrix2.cpp Matrix3.cpp MyRandomNumber.cpp Vector3.cpp
          Vector3.cpp
          MyRandomNumber.cpp
          Matrix3.cpp
          Matrix2.cpp
+         Logger.cpp
          Engine.cpp
          dllmain.cpp
+         Profiler.cpp
          Generating Code...
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.0\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug\obj\Engine.res" Engine.rc 
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Debug\Engine.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Debug\Engine.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Debug\Engine.lib" /MACHINE:X86 /DLL Debug\obj\dllmain.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Debug\Engine.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Debug\Engine.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Debug\Engine.lib" /MACHINE:X86 /DLL Debug\obj\Engine.res
+         Debug\obj\Profiler.obj
+         Debug\obj\dllmain.obj
          Debug\obj\Engine.obj
+         Debug\obj\Logger.obj
          Debug\obj\Matrix2.obj
          Debug\obj\Matrix3.obj
          Debug\obj\MyRandomNumber.obj
          Debug\obj\Vector3.obj
             Creating library C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Debug\Engine.lib and object C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Debug\Engine.exp
          Engine.vcxproj -> C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Debug\Engine.dll
-     1>Done Building Project "C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Engine\Engine.vcxproj" (Rebuild target(s)).
+     1>Done Building Project "C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Engine\Engine.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.79
+Time Elapsed 00:00:02.65

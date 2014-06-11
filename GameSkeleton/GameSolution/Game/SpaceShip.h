@@ -11,15 +11,17 @@ class SpaceShip
 {
 
 public:
-	SpaceShip(GameSolution&, Timer*);
+	SpaceShip(GameSolution&);
 	SpaceShip(void);
 	Vector2 position;
 	Vector2 velocity;
 	bool outSideLine;
 	Matrix3 rotatedMatirx;
+	static void setIsAlive(bool isAlive);
 	void draw(Core::Graphics&);
 	void update(float dt);
 	void ModeKeyPressed(Vector2&);
+
 
 };
 
