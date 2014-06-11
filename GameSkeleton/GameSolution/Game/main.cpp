@@ -6,6 +6,7 @@
 #include "ProjectileManager.h"
 #include "GameSolution.h"
 #include "Profiler.h"
+#include "Logger.h"
 
 using Core::Input;
 
@@ -31,7 +32,7 @@ bool Update(float dt)
 
 void Draw(Core::Graphics& graphics)
 {
-	//ASSERT(true == false);
+	ASSERT(true == false);
 
 
 	gs.draw(graphics);
