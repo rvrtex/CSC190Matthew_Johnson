@@ -51,6 +51,7 @@ void main()
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF);
 	Leek* l = new Leek();
 	l;
+	//delete l;
 	Core::Init("Matt's AWESOME Game Demo", SCREEN_WIDTH, SCREEN_HEIGHT);
 	Core::RegisterUpdateFn(Update);
 	Core::RegisterDrawFn(Draw);

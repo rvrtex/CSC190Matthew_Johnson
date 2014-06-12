@@ -1,4 +1,4 @@
-﻿Build started 6/12/2014 10:51:34 AM.
+﻿Build started 6/12/2014 11:07:37 AM.
      1>Project "C:\Users\Matthew\Documents\GitHub\CSC190Matthew_Johnson\GameSkeleton\GameSolution\Game\Game.vcxproj" on node 2 (Build target(s)).
        Project file contains ToolsVersion="12.0". This toolset may be unknown or missing, in which case you may be able to resolve this by installing the appropriate version of MSBuild, or the build may have been forced to a particular ToolsVersion for policy reasons. Treating the project as if it had ToolsVersion="4.0". For more information, please see http://go.microsoft.com/fwlink/?LinkId=291333.
      1>ClCompile:
@@ -30,4 +30,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.56
+Time Elapsed 00:00:01.15
