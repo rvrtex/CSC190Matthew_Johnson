@@ -13,20 +13,23 @@
 
 class ParticleEffect
 {
-	Particle *particleArray;
+
+	float myDT;
+	Particle particles[500];
+	
 	int numberOfParticlesInEffect;
+public:
+	
+	//void ParticleEffect::ClearArray();
+	
 	MyRandomNumber rn;	
 	Vector2 position;
 	Vector2 velocity;
-	float myDT;
-	
-
-public:
 	bool isFinished;
 	int effect;
-	void ParticleEffect::CleanUpParticleEffect(void);
+	//void ParticleEffect::CleanUpParticleEffect(void);
 	ParticleEffect::ParticleEffect(void);
-	ParticleEffect::ParticleEffect(int numberOfParticles,int effect, Vector2 position, Vector2 velocity,float);
+	ParticleEffect::ParticleEffect(float dt,int effectNum);
 	void ParticleEffect::TunnelEffect();
 	void ParticleEffect::draw(Core::Graphics&);
 	void ParticleEffect::update(float);

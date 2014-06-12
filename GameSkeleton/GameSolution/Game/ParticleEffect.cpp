@@ -1,4 +1,5 @@
 #include "ParticleEffect.h"
+#include <vector>
 
 
 
@@ -7,74 +8,95 @@ ParticleEffect::ParticleEffect(void)
 
 
 
-ParticleEffect::ParticleEffect(int numberOfParticles, int effect, Vector2 position, Vector2 velocity, float dt)
+ParticleEffect::ParticleEffect(float dt,int thisEffect)
 {
 	myDT = dt;
-	numberOfParticlesInEffect = numberOfParticles;
-	particleArray = new Particle[numberOfParticlesInEffect];
-	this->position = position;
-	this->velocity = velocity;
-	this->effect = effect;
-	isFinished = false;
+	effect = thisEffect;
+	numberOfParticlesInEffect = 500;
+	for(int i = 0; i < 500; i++)
+	{
+		Particle p;
+		
+		p.isAlive =true;
+		particles[i] = p;
+	}
+
 }
-
-
+/*
+numberOfParticlesInEffect = numberOfParticles;
+particleArray = new Particle[numberOfParticlesInEffect];
+this->position = position;
+this->velocity = velocity;
+this->effect = effect;
+isFinished = false;*/
 
 void ParticleEffect::draw(Core::Graphics& g)
 {
+
 	int numOfDead = 0;
+
 	for(int i = 0; i < numberOfParticlesInEffect; i++)
 	{
-		if(!particleArray[i].isAlive)
-		{
-			numOfDead++;
-		}
-		if(numberOfParticlesInEffect == numOfDead)
-		{
-			isFinished = true;
-		//	delete [] particleArray;
-		}
+		if(!particles[i].isAlive )
+			{
+				numOfDead++;
+			}
+			if(numberOfParticlesInEffect == numOfDead)
+			{
+				isFinished = true;
+			}
 
 		if(effect == 1)
 		{
-			if(particleArray[i].lifetime < particleArray[i].Maxlifetime)
-			{
 			
-				particleArray[i].lifetime = particleArray[i].lifetime + myDT*.5f;
+			if(particles[i].lifetime < particles[i].Maxlifetime)
+			{
+
+				particles[i].lifetime = particles[i].lifetime + myDT*.5f;
 			}
 			else
 			{
-				particleArray[i].isAlive = false;
+				if(i ==498)
+				{
+					int j;
+					j=5;
+				}
+				particles[i].isAlive = false;
 			}
 		}
 		else if(effect == 2)
 		{
 			float angle;
+				isFinished = false;
+
+
 			Matrix3 tempMatrix;
 			Vector2 tempVelocity;
 			angle = MyRandomNumber::RandomInRange(1.0f,100.0f)*((2.0f*3.14f)/100.0f);
 			tempMatrix.Rotation(angle);
 			float speedDiff = MyRandomNumber::RandomInRange(-5.0f,5.0f);
 			tempVelocity = tempMatrix*(velocity+speedDiff);
-		 
-			if(particleArray[i].position.x > 1024 || particleArray[i].position.x < 0)
+
+			if(particles[i].position.x > 1024 || particles[i].position.x < 0)
 			{
-				particleArray[i].position = this->position;
-				particleArray[i].velocity = tempVelocity;
-				particleArray[i].color = Util::Colors::VeryColor(RGB(100,100,255),10.05f);
+				particles[i].position = Vector2(500,300);
+				particles[i].velocity = tempVelocity;
+				particles[i].color = Util::Colors::VeryColor(RGB(100,100,255),10.05f);
 
 			}
-			else if(particleArray[i].position.y > 728 || particleArray[i].position.y < 0)
+			else if(particles[i].position.y > 728 || particles[i].position.y < 0)
 			{
-				particleArray[i].position = this->position;
-				particleArray[i].velocity = tempVelocity;
-				particleArray[i].color = Util::Colors::VeryColor(RGB(100,100,255),255.0f);
+				particles[i].position = Vector2(500,300);
+				particles[i].velocity = tempVelocity;
+				particles[i].color = Util::Colors::VeryColor(RGB(100,100,255),255.0f);
 
 			}
 		}
-		particleArray[i].draw(g);
+		particles[i].draw(g);
 	}
 }
+
+
 
 //void ParticleEffect::CleanUpParticleEffect(void)
 //{
@@ -88,20 +110,21 @@ void ParticleEffect::BounceEffect()
 {
 
 	float angle;
+	effect=1;
 	Matrix3 tempMatrix;
 	Vector2 tempVelocity;
 	isFinished = false;
-	for(int i = 0; i < numberOfParticlesInEffect; i++)
+	for(int i = 0; i < 500; i++)
 	{
 		angle = MyRandomNumber::RandomInRange(.01f,1.0f)*((2.0f*3.14f)/100.0f);
 		tempMatrix.Rotation(angle);
 		float speedDiff = MyRandomNumber::RandomInRange(-10.0f,10.0f);
 		tempVelocity = tempMatrix*(velocity+speedDiff);
-		Particle p;
-		p.position = this->position;
-		p.velocity = tempVelocity;
-		p.color = Util::Colors::VeryColor(RGB(255,0,0),100.0f);
-		particleArray[i] = p;	
+		particles[i].isAlive = true;
+		particles[i].position = this->position;
+		particles[i].velocity = tempVelocity;
+		particles[i].color = Util::Colors::VeryColor(RGB(255,0,0),100.0f);
+
 	}
 
 
@@ -112,21 +135,34 @@ void ParticleEffect::TunnelEffect()
 {
 
 	float angle;
+	effect=2;
+	isFinished = false;
 	Matrix3 tempMatrix;
 	Vector2 tempVelocity;
 	for(int i = 0; i < numberOfParticlesInEffect; i++)
 	{
-		Particle p;
-
 		angle = MyRandomNumber::RandomInRange(.01f,1.0f)*((2.0f*3.14f)/100.0f);
 		tempMatrix.Rotation(angle);
 		velocity.x = MyRandomNumber::RandomInRange(-5.0f,5.0f);
 		velocity.y = MyRandomNumber::RandomInRange(-5.0f,5.0f);
 		tempVelocity = tempMatrix*(velocity);
-		p.position = this->position;
-		p.velocity = tempVelocity;
-		p.color = Util::Colors::VeryColor(RGB(100,100,255),255.0f);
+		particles[i].isAlive = true;
+		particles[i].position = this->position;
+		particles[i].velocity = tempVelocity;
+		particles[i].color = Util::Colors::VeryColor(RGB(100,100,255),255.0f);
 
-		particleArray[i] = p;	
 	}
+	
 }
+
+//void ParticleEffect::ClearArray()
+//{
+//	if(particles.size() > 0)
+//	{
+//	for(int it = 0; it <numberOfParticlesInEffect; it++)
+//	{
+//		//particles[it] = NULL;
+//	}
+//	particles.clear();
+//	}
+//}

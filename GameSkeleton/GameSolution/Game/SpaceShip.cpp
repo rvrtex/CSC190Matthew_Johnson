@@ -64,10 +64,7 @@ SpaceShip::SpaceShip(GameSolution& gm)
 	myTurret = Turret();
 }
 
-void SpaceShip::setIsAlive(bool setIsAlive)
-{
-	spaceShipIsAlive = setIsAlive;
-}
+
 void SpaceShip::ModeKeyPressed(Vector2& velocity)
 {
 
@@ -97,6 +94,8 @@ void SpaceShip::ModeKeyPressed(Vector2& velocity)
 		onMainMenu = false;
 		EnemyTypeTwo* ett = new EnemyTypeTwo();
 		CollisionManager::AddEnemyShip(*ett);
+		GameSolution::UseEffect(2,position,position);
+
 	}
 	if(Core::Input::IsPressed(Core::Input::BUTTON_LEFT))
 	{		if(spaceShipIsAlive)
@@ -169,6 +168,10 @@ int ousideLineNum = 0;
 
 void SpaceShip::update(float dt)
 {
+	if(!spaceShipIsAlive)
+	{
+		ResetShipPosition();
+	}
 	//	Profiler::getInstance().newFrame();
 	myDt = dt;
 	float quadDotProd = 0;
@@ -197,10 +200,8 @@ void SpaceShip::update(float dt)
 			quadLastDotProd = Dot(quadWallNorm,quadShipResultVector);	
 
 			if(quadDotProd < 0 && quadLastDotProd > 0 )
-			{
-				ParticleEffect* part = new ParticleEffect(5000,1,position,velocity,dt);
-				part->BounceEffect();
-				myGm ->AddToList(*part);
+			{							
+				GameSolution::UseEffect(1,position,velocity);
 				position = initialPosition;
 				velocity = velocity - (2*(Dot(velocity,quadNormalized)*quadNormalized));
 			}
@@ -314,5 +315,18 @@ void SpaceShip::update(float dt)
 	position.y = position.y + velocity.y * dt*quickTurnAround;
 	myTurret.update();
 
+
+}
+
+void SpaceShip::ResetShipPosition()
+{
+	position = Vector2(500,300);
+}
+
+void SpaceShip::setIsAlive(bool setIsAlive)
+{
+	spaceShipIsAlive = setIsAlive;
+	
+	
 
 }

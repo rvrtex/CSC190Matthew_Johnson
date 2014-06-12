@@ -79,10 +79,8 @@ void CollisionManager::draw(Core::Graphics& g, Vector2& shipPostion)
 				if(lenghOfdistance < 7)
 				{
 					float tempScore = enemyShips[j]->scoreValue;
-					GameSolution::AddToScore(tempScore);
-					ParticleEffect* pe = new ParticleEffect(500,1,enemyShips[j]->position,enemyShips[j]->velocity, GameSolution::GetDT());
-					pe->BounceEffect();
-					GameSolution::AddToList(*pe);
+					GameSolution::AddToScore(tempScore);				
+					GameSolution::UseEffect(1,enemyShips[j]->position,enemyShips[j]->velocity);
 					missiles[i].isAlive = false;
 					enemyShips[j]->HasDied();
 
@@ -100,11 +98,6 @@ void CollisionManager::draw(Core::Graphics& g, Vector2& shipPostion)
 	
 	shipPostion;
 
-	
-	
-
-	
-	
 };
 
 void CollisionManager::update(float dt, Vector2& shipPosition){dt; shipPosition;

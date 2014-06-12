@@ -32,7 +32,7 @@ bool Update(float dt)
 
 void Draw(Core::Graphics& graphics)
 {
-	ASSERT(true == false);
+	//ASSERT(true == false);
 
 
 	gs.draw(graphics);
@@ -46,13 +46,11 @@ void Draw(Core::Graphics& graphics)
 
 void main()
 {
-	
 
 	Core::Init("Matt's AWESOME Game Demo", SCREEN_WIDTH, SCREEN_HEIGHT);
 	Core::RegisterUpdateFn(Update);
 	Core::RegisterDrawFn(Draw);
 	Core::GameLoop();
 
-	
 }
 

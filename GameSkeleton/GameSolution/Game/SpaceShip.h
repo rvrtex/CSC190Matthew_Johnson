@@ -9,6 +9,7 @@
 
 class SpaceShip
 {
+	void ResetShipPosition();
 
 public:
 	SpaceShip(GameSolution&);
@@ -19,6 +20,7 @@ public:
 	Matrix3 rotatedMatirx;
 	static void setIsAlive(bool isAlive);
 	void draw(Core::Graphics&);
+
 	void update(float dt);
 	void ModeKeyPressed(Vector2&);
 

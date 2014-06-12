@@ -21,7 +21,7 @@ CollisionManager *cm;
 DrawValues drawValues;
 Vector2 startingPosition(500,275);
 
-std::vector<ParticleEffect*> listOfParticleEffects;
+ParticleEffect listOfParticleEffects[20];
 Vector2 Dimension[] = {
 	Vector2(8.0f, 0.0f),
 	Vector2(8.0f, 8.0f),
@@ -37,9 +37,9 @@ GameSolution::GameSolution()
 	Vector2 startPosition(512.0f,364.0f);
 	Vector2 firstEnemyStartingPosition(0.0f,MyRandomNumber::RandomInRange(0.0f,728.0f));
 
-	ParticleEffect* pe = new ParticleEffect(500,2,startPosition,startPosition,myDT);
+	/*ParticleEffect* pe = new ParticleEffect(500,2,startPosition,startPosition,myDT);
 	pe->TunnelEffect();
-	AddToList(*pe);
+	AddToList(*pe);*/
 
 	//Profiler::getInstance().startUp("ProfileTest.csv");
 
@@ -49,6 +49,14 @@ GameSolution::GameSolution()
 	meShip.position = Vector2(500,300);
 	//meLerp.position = Vector2(+50.0f,50.0f);
 	cm = new CollisionManager();
+
+	for(int i = 0 ; i < 20; i++)
+	{
+		ParticleEffect pe(myDT,3);
+		pe.isFinished = true;
+		listOfParticleEffects[i] = pe;
+
+	}
 
 
 }
@@ -68,9 +76,32 @@ void GameSolution::update(float dt)
 	cm->update(myDT,meShip.position);
 }
 
-void GameSolution::AddToList(ParticleEffect &pe)
+void GameSolution::UseEffect(int effect, Vector2 position, Vector2 velocity)
 {
-	listOfParticleEffects.push_back(&pe);
+	for(int i = 1; i < 20; i++)
+	{
+		if(listOfParticleEffects[i].isFinished)
+		{	
+			if(effect == 1)
+			{
+				listOfParticleEffects[i].effect = effect;
+				listOfParticleEffects[i].position = position;
+				listOfParticleEffects[i].velocity = velocity;
+				listOfParticleEffects[i].BounceEffect();
+				break;
+			}
+			else
+			{
+				listOfParticleEffects[0].effect = effect;
+				listOfParticleEffects[0].position = startingPosition;
+				listOfParticleEffects[0].velocity = startingPosition;
+				listOfParticleEffects[0].TunnelEffect();
+				break;
+			}
+		}
+
+	}
+
 }
 
 void GameSolution::AddToScore(float incramentAmount)
@@ -106,7 +137,7 @@ void GameSolution::draw(Core::Graphics& graphics)
 
 	{
 		//timer->Start();
-	//	meLerp.draw(graphics);
+		//	meLerp.draw(graphics);
 		//timer->Stop();
 		//Profiler::getInstance().addEntry("Lerp Draw", timer->lastLapTime());
 
@@ -125,39 +156,38 @@ void GameSolution::draw(Core::Graphics& graphics)
 	Matrix3 initialMatrix;
 	//squarePlanet sp = recusivePlanets(3,0,0,graphics,initialMatrix);
 	{
+		
 		//timer->Start();
-		if(listOfParticleEffects.size() > 0)
-		{
-			std::vector<ParticleEffect*> tempListForDeleting;
+		
+	
 
-			for(std::vector<ParticleEffect>::size_type  it = 0; it != listOfParticleEffects.size(); ++it)
+
+		for(int it = 0; it < 20; it++)
+		{
+			if(!listOfParticleEffects[it].isFinished)
 			{
-				if(!listOfParticleEffects[it]->isFinished)
+				if(it == 0)
 				{
+					int j;
+			j = 5;
+				}
 				
-					listOfParticleEffects[it]->draw(graphics);
-				}
-				else
-				{
-					ParticleEffect pe = *listOfParticleEffects[it];
-					tempListForDeleting.push_back(&pe);
-				}
+				listOfParticleEffects[it].draw(graphics);
+
 			}
-			for(std::vector<ParticleEffect>::size_type  it = 0; it < tempListForDeleting.size(); ++it)
-			{							
-				ParticleEffect pe = *tempListForDeleting[it];
-				listOfParticleEffects.erase(std::find(listOfParticleEffects.begin(), listOfParticleEffects.end(), &pe), listOfParticleEffects.end());
-			}
+
 		}
+
+
 		//timer->Stop();
 		//Profiler::getInstance().addEntry("PE Draw", timer->lastLapTime());
-		
+
 		//timer->shutdown();
 	}
-	
+
 	drawValues.DrawValue(graphics);
 	drawValues.DrawValue(graphics,"Score: ",gameScore);
-	
+
 }
 
 
