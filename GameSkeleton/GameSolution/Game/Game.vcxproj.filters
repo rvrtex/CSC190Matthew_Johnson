@@ -20,6 +20,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="EnemyTypeOne.cpp" />
     <ClCompile Include="EnemyTypeTwo.cpp" />
+    <ClCompile Include="Leek.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SpaceShip.h" />
@@ -40,5 +41,6 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="EnemyTypeOne.h" />
     <ClInclude Include="EnemyTypeTwo.h" />
+    <ClInclude Include="Leek.h" />
   </ItemGroup>
 </Project>

@@ -95,6 +95,7 @@
     <ClCompile Include="EnemyTypeOne.cpp" />
     <ClCompile Include="EnemyTypeTwo.cpp" />
     <ClCompile Include="GameSolution.cpp" />
+    <ClCompile Include="Leek.cpp" />
     <ClCompile Include="LerpingRoid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Missile.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="EnemyTypeOne.h" />
     <ClInclude Include="EnemyTypeTwo.h" />
     <ClInclude Include="GameSolution.h" />
+    <ClInclude Include="Leek.h" />
     <ClInclude Include="LerpingRoid.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Particle.h" />
