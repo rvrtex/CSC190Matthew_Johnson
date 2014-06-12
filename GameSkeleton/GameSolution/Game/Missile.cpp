@@ -1,4 +1,6 @@
 #include "Missile.h"
+#include "DebugMemory.h"
+
 
 Vector2 missileShape[] = {
 	Vector2(0.0f,5.0f),

@@ -17,7 +17,7 @@ public:
 
 	GameSolution(void);
 	Timer FPSTimer;
-	
+	void ShutDown();
 	static float GetDT();
 	static void UseEffect(int effect, Vector2 position, Vector2 velocity);
 	static void AddToScore(float incramentAmount);

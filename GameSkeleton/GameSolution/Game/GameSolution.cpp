@@ -8,6 +8,8 @@
 #include "Profiler.h"
 #include "CollisionManager.h"
 #include "SpaceShip.h"
+#include "DebugMemory.h"
+
 
 //ProjectileManager pm;
 
@@ -29,6 +31,7 @@ Vector2 Dimension[] = {
 	Vector2(-8.0f, 0.0f)
 
 };
+
 GameSolution::GameSolution()
 {
 
@@ -191,7 +194,11 @@ void GameSolution::draw(Core::Graphics& graphics)
 }
 
 
-
+void GameSolution::ShutDown()
+{
+	cm->ShutDown();
+	delete cm;
+}
 
 
 //squarePlanet recusivePlanets(int n, int cn,float angle, Core::Graphics& g, Matrix3 myPosition)

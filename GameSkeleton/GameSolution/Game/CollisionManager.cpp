@@ -1,5 +1,7 @@
 #include "CollisionManager.h"
 #include "DrawValues.h"
+#include "DebugMemory.h"
+
 
 Missile missiles[10];
 
@@ -16,9 +18,9 @@ CollisionManager::CollisionManager(){
 
 	for(int i = 0; i < 10; i++)
 	{
-		Missile *m = new Missile();
-		m->isAlive = false;
-		missiles[i] = *m;
+		Missile m;
+		m.isAlive = false;
+		missiles[i] = m;
 	}
 }
 
@@ -87,6 +89,7 @@ void CollisionManager::draw(Core::Graphics& g, Vector2& shipPostion)
 				}	
 
 			}
+			
 			enemyShips[j]->Draw(g);
 
 		}
@@ -110,3 +113,19 @@ for(std::vector<Enemy>::size_type j = 0; j < enemyShips.size(); j++)
 };
 
 
+void CollisionManager::ShutDown()
+{
+	//for(int i =0; i < 10; i++)
+	//{
+	//	Missile *m =  &missiles[i];
+	//	delete &m;
+	//}
+
+	int sizeOfEnemyShips = enemyShips.size();
+
+	for(int j = 0; j < sizeOfEnemyShips; j++)
+	{
+		delete enemyShips[j];
+	}
+	enemyShips.clear();
+}

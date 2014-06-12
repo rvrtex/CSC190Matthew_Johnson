@@ -25,6 +25,7 @@ bool Update(float dt)
 	{
 		//Profiler::getInstance().shutDown();
 
+		gs.ShutDown();
 		return true;
 	}
 	return false;

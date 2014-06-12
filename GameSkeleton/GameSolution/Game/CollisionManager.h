@@ -10,6 +10,7 @@
 #include "EnemyTypeOne.h"
 #include "EnemyTypeTwo.h"
 
+
 class CollisionManager
 {
 	/*
@@ -24,7 +25,7 @@ public:
 	static void MissileFired(Vector2&, Vector2&);
 	void draw(Core::Graphics&, Vector2&);
 	void update(float, Vector2&);
-
+	void ShutDown();
 	
 };
 
