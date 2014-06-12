@@ -19,6 +19,7 @@ GameSolution gs;
 
 bool Update(float dt)
 {	
+
 	gs.update(dt);
 	if (Input::IsPressed(Input::KEY_ESCAPE))
 	{
@@ -46,7 +47,7 @@ void Draw(Core::Graphics& graphics)
 
 void main()
 {
-
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF);
 	Core::Init("Matt's AWESOME Game Demo", SCREEN_WIDTH, SCREEN_HEIGHT);
 	Core::RegisterUpdateFn(Update);
 	Core::RegisterDrawFn(Draw);
